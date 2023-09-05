@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,18 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Proyecto_web';
+
+  constructor(private router: Router){}
+
+
+  iniciarSesion() {
+    console.log('Iniciando sesión...');
+    this.router.navigateByUrl('/login')
+  }
+
+  registrarse() {
+    console.log('Registrándose...');
+  }
+
+
 }
