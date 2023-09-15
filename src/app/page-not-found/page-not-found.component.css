@@ -1,12 +1,11 @@
-@import url('https://fonts.googleapis.com/css?family=Abril+Fatface|Lato');
+@import url('https://fonts.googleapis.com/css?family=Abril+Fatcara|Lato');
 
-body {
-  background: #D3DEEA;
+#fondo {
+  background: #0D0D0D;
+  width: 100%;
+  height: 100%;
 }
 
-.top {
-  margin-top: 30px;
-}
 
 .container {
   margin: 0 auto;
@@ -16,8 +15,8 @@ body {
   margin-top: -40px;
 }
 
-.ghost,
-.ghost-copy {
+.fantasma,
+.fantasma-copia {
   width: 50%;
   height: 53%;
   left: 25%;
@@ -30,19 +29,19 @@ body {
   animation: float 2s ease-out infinite;
 }
 
-.ghost-copy {
+.fantasma-copia {
   z-index: 0;
 }
 
-.face {
+.cara {
   position: absolute;
   width: 100%;
   height: 60%;
   top: 20%;
 }
 
-.eye,
-.eye-right {
+.ojo,
+.ojo-derecho {
   position: absolute;
   background: #585959;
   width: 13px;
@@ -51,15 +50,15 @@ body {
   top: 40%;
 }
 
-.eye {
+.ojo {
   left: 25%;
 }
 
-.eye-right {
+.ojo-derecho {
   right: 25%;
 }
 
-.mouth {
+.boca {
   position: absolute;
   top: 50%;
   left: 45%;
@@ -70,10 +69,10 @@ body {
   transform: rotate(45deg);
 }
 
-.one,
-.two,
-.three,
-.four {
+.uno,
+.dos,
+.tres,
+.cuatro {
   position: absolute;
   background: #EDEDED;
   top: 85%;
@@ -83,27 +82,27 @@ body {
   z-index: 0;
 }
 
-.one {
+.uno {
   border-radius: 0 0 100% 30%;
   left: -1px;
 }
 
-.two {
+.dos {
   left: 23%;
   border-radius: 0 0 50% 50%;
 }
 
-.three {
+.tres {
   left: 50%;
   border-radius: 0 0 50% 50%;
 }
 
-.four {
+.cuatro {
   left: 74.5%;
   border-radius: 0 0 30% 100%;
 }
 
-.shadow {
+.sombra {
   position: absolute;
   width: 30%;
   height: 7%;
@@ -132,17 +131,18 @@ body {
   }
 }
 
-.bottom {
+.boton {
   margin-top: 10px;
 }
 
 
 h1 {
-  font-family: 'Abril Fatface', serif;
+  font-family: 'Abril Fatcara', serif;
   color: #EDEDED;
   text-align: center;
   font-size: 9em;
   margin: 0;
+  padding-top: 6.5%;
   text-shadow: -1px 0 #BFC0C0, 0 1px #BFC0C0, 1px 0 #BFC0C0, 0 -1px #BFC0C0;
 }
 
@@ -154,23 +154,24 @@ h3 {
   color: #BFC0C0;
   margin-top: -20px;
   font-weight: 900;
+  margin-bottom: 50px;
 }
 
 p {
   text-align: center;
   font-family: 'Lato', sans-serif;
   color: #585959;
-  font-size: 0.6em;
-  margin-top: -20px;
+  font-size: 0.9em;
+  margin-top: 20px;
   text-transform: uppercase;
 }
 
 
-.buttons {
+.botones {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 50px;
 }
 
 
@@ -178,11 +179,11 @@ p {
 .btn {
   background: #EDEDED;
   padding: 15px 20px;
-  margin: 5px;
+  margin: 15px;
   color: #585959;
   font-family: 'Lato', sans-serif;
   text-transform: uppercase;
-  font-size: 0.6em;
+  font-size: 0.9em;
   letter-spacing: 1px;
   border: 0;
 }
