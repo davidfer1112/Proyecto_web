@@ -15,7 +15,7 @@ export class PageNotFoundComponent {
   }
 
   irAHome() {
-    this.router.navigateByUrl('/home')
+    this.router.navigateByUrl('/welcome')
   }
   
 }

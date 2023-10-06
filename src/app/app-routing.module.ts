@@ -4,12 +4,14 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { WelcomeComponent } from './welcome/welcome.component';
 
 const routes: Routes = [
   {path: 'login',component: LoginComponent},
   {path: 'register',component: RegisterComponent},
   {path: 'home', component: HomeComponent},
-  {path: '', redirectTo: 'home', pathMatch: 'full'}, // cuando se entra a la ruta inicial me redirige a la ruta home
+  {path: 'welcome', component: WelcomeComponent},
+  {path: '', redirectTo: 'welcome', pathMatch: 'full'}, // cuando se entra a la ruta inicial me redirige a la ruta home
   {path: '**', component: PageNotFoundComponent} // cuando no encuentra la ruta me redirige a pagina no encontrada
 ];
 
