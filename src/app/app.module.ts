@@ -7,9 +7,8 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { MainAdminComponent } from './main-admin/main-admin.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-
-
 
 
 @NgModule({
@@ -19,7 +18,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
     RegisterComponent,
     HomeComponent,
     PageNotFoundComponent,
-    WelcomeComponent,
+    MainAdminComponent,
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
