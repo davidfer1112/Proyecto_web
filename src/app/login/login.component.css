@@ -1,0 +1,175 @@
+.container-welcome{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('../../assets/images/espacio.jpeg');
+    background-size: cover;
+    background-position: center;
+}
+
+.container-welcome h2, p , label {
+    color: whitesmoke;
+}
+
+.container-welcome img {
+    height: 25px;
+}
+
+
+.container-fomulario{
+    position: relative;
+    width: 400px;
+    height: 440px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, .5);
+    border-radius: 20px;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0 30px regba(0, 0 ,0, .5 );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: height 0.2 ease;
+}
+
+.container-fomulario.active{
+    height: 520px;
+}
+
+.container-fomulario .container-form{
+    width: 100%;
+    padding: 40px;
+}
+
+.registro{
+    padding: 0px 40px 40px 40px;
+}
+
+.register h2{
+    padding-top: 40px;
+}
+
+.container-fomulario .container-form.login{
+    transition: transform 0.18s ease;
+    transform: translate(0)
+}
+
+.container-fomulario.active .container-form.login{
+    transition: none;
+    transform: translateX(-450px);
+}
+
+.container-fomulario .container-form.register{
+    position: absolute;
+    transition: none;
+    transform: translateX(450px);
+}
+
+.container-fomulario.active .container-form.register{
+    transition: transform 0.18s ease;
+    transform: translate(0)
+}
+
+.container-form h2{
+    font-size: 2rem;
+    text-align: center;
+}
+
+.container-input {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid whitesmoke;
+    margin: 30px 0;
+}
+.container-input label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    font-weight: 500;
+    pointer-events: none;
+    transition: 0.5s;
+}
+
+.container-input input:focus~label,
+.container-input input:valid~label{
+ top: -5px;
+}
+
+.container-input input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: whitesmoke;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0 35px 0 5px;
+}
+
+.container-input .icono{
+    position: absolute;
+    right: 8px;
+    font-size: 1.2rem;
+    color: whitesmoke;
+    line-height: 57px;
+}
+
+.recuerdame-olvido{
+    font-size: 0.9rem;
+    color: whitesmoke;
+    font-weight: 500;
+    margin: -15px 0 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.recuerdame-olvido label input{
+    accent-color: whitesmoke;
+    margin-right: 3px;
+}
+
+.recuerdame-olvido a{
+    color: whitesmoke;
+    text-decoration: none;
+}
+
+.recuerdame-olvido a:hover{
+    text-decoration: underline;
+}
+
+.boton-login{
+    width: 100%;
+    height: 45px;
+    background: whitesmoke;
+    border: none;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size:  1rem;
+    color: #162938;
+    font-weight: 500;
+}
+
+.iniciosesion-registro{
+    font-size: 0.9rem;
+    color: whitesmoke;
+    text-align: center;
+    font-weight: 500;
+    margin: 25px 0 10px;
+}
+
+
+.iniciosesion-registro p a{
+    color: whitesmoke;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.iniciosesion-registro p a:hover{
+    text-decoration: underline;
+}
