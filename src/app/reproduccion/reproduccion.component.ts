@@ -37,19 +37,22 @@ export class ReproduccionComponent {
   }
 
   iniciarBarraDeProgreso() {
-    const intervalo = 1000; // Actualizar cada segundo
-    this.tiempoTranscurrido = 0;
-    this.barraProgreso = 0;
+    const intervalo = 1000; 
   
-    this.actualizarBarraDeProgreso(); // Actualizar inicialmente
+    if (this.tiempoTranscurrido >= this.duracionTotal) {
+      this.tiempoTranscurrido = 0;
+      this.barraProgreso = 0;
+    }
+  
+    this.actualizarBarraDeProgreso(); 
   
     this.intervaloBarraProgreso = setInterval(() => {
       this.tiempoTranscurrido += 1;
   
       if (this.tiempoTranscurrido >= this.duracionTotal) {
-        this.tiempoTranscurrido = 0; // Reiniciar tiempo transcurrido
-        this.barraProgreso = 0; // Reiniciar barra de progreso
-        this.toggleReproduccion(); // Detener reproducción al alcanzar la duración total
+        this.tiempoTranscurrido = 0; 
+        this.barraProgreso = 0; 
+        this.toggleReproduccion(); 
       } else {
         this.actualizarBarraDeProgreso();
       }
@@ -62,13 +65,13 @@ export class ReproduccionComponent {
   }
 
   toggleReproduccion() {
-    this.reproduciendo = !this.reproduciendo;
-  
     if (this.reproduciendo) {
-      this.iniciarBarraDeProgreso();
-    } else {
       this.detenerBarraDeProgreso();
+    } else {
+      this.iniciarBarraDeProgreso();
     }
+  
+    this.reproduciendo = !this.reproduciendo;
   }
 
   actualizarBarraDeProgreso() {
