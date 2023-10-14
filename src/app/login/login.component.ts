@@ -1,6 +1,7 @@
 import { Component, Renderer2, ElementRef } from '@angular/core';
 import { MoveDirection, ClickMode, HoverMode, OutMode, Container, Engine } from "tsparticles-engine";
 import { loadSlim } from "tsparticles-slim";
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -10,11 +11,15 @@ import { loadSlim } from "tsparticles-slim";
 })
 export class LoginComponent {
 
-  constructor(private renderer: Renderer2, private el: ElementRef) {}
+  constructor(private router: Router, private renderer: Renderer2, private el: ElementRef) {}
 
   toggleForm() {
     const containerFormulario = this.el.nativeElement.querySelector('.container-fomulario');
     containerFormulario.classList.toggle('active');
+  }
+
+  inicioSesion() {
+    this.router.navigate(['/home']);
   }
 
 
