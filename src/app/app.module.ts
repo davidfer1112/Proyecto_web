@@ -14,6 +14,7 @@ import { HeaderComponent } from './header/header.component';
 import { ListasComponent } from './listas/listas.component';
 import { ReproduccionComponent } from './reproduccion/reproduccion.component';
 import { InfoUsuarioComponent } from './info-usuario/info-usuario.component';
+import { InterfazAdminComponent } from './interfaz-admin/interfaz-admin.component';
 
 
 
@@ -28,7 +29,8 @@ import { InfoUsuarioComponent } from './info-usuario/info-usuario.component';
     HeaderComponent,
     ListasComponent,
     ReproduccionComponent,
-    InfoUsuarioComponent
+    InfoUsuarioComponent,
+    InterfazAdminComponent
   ],
   imports: [
     BrowserModule,

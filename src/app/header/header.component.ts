@@ -20,4 +20,8 @@ export class HeaderComponent {
     this.router.navigate(['/info/usuario']);
   }
 
+  irAAdmin(){
+    this.router.navigate(['/admin']);
+  }
+
 }
