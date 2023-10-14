@@ -1,1 +1,59 @@
-<p>interfaz-admin works!</p>
+<div class="admin-container">
+
+    <div class="admin-header">
+        <div class="logo-container">
+            <button>
+                <img src="assets/images/Logo_blanco.png" alt="correo" class="icono" (click)="irAHome()">
+            </button>
+        </div>
+    
+        <div class="usuario">
+            <button (click)="desplegar()" class="boton-usuario">
+                <img src="assets/images/usuario.png" alt="correo" class="icono-usuario">
+            </button>
+    
+            <div class="botones-container" *ngIf="desplegarBotones" [@fadeIn]="'show'">
+                <button (click)="irAInfo()">Información</button>
+                <br>
+                <button (click)="irAAdmin()">Ajustes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="edit-container">
+        <div class="seleccion">
+            <button class="seleccion-iz" (click)="mostrarLista()">Crear Lista</button>
+            <button class="seleccion-der" (click)="mostrarCancion()">Agregar Canciones</button>
+        </div>
+        
+        <div class="contenidos">
+            <form class="contenido-lista" *ngIf="listaSeleccionada">
+                <p>Nombre de la lista (Genero): </p>
+                <input type="text" placeholder="Heavy Metal" required>
+                <br> 
+                <button type="submit">Crear Lista</button>
+            </form>
+
+            <form class="contenido-cancion" *ngIf="cancionSeleccionada">
+
+                <p>Nombre de la cancion: </p>
+                <input type="text" placeholder="Do i matter to me" required>
+
+                <p>Artista: </p>
+                <input type="text" placeholder="Joji" required>
+
+                <p>Nombre de la lista: </p>
+                <input type="text" placeholder="Sad" required>
+
+                <p>Duracion: </p>
+                <input type="text" placeholder="01:25" required>
+                
+                <br>
+                <button type="submit">Agregar cancion</button>
+            </form>
+
+        </div>
+    </div>
+        
+
+</div>

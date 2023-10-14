@@ -1,0 +1,198 @@
+.admin-header {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+
+}
+
+.admin-container{
+    padding-left: 3%;
+    padding-right: 4%;
+}
+
+.logo-container {
+    flex-grow: 1; 
+}
+
+.admin-header .icono {
+    height: 150px;
+}
+
+.admin-container .icono-usuario {
+    height: 60px;
+}
+
+.admin-header button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+
+.usuario button {
+    background: transparent;
+    margin: 0;
+    padding: 10px;
+    padding-bottom: 2px;
+    border: 1px solid #888;
+    cursor: pointer;
+    color: #888;
+}
+
+.usuario .boton-usuario {
+    border: none;
+}
+
+.usuario button+button {
+    margin-top: 5px;
+    border-top: 1px solid #888;
+}
+
+.usuario {
+    position: relative;
+    color: whitesmoke;
+}
+
+.botones-container.show {
+    display: block;
+    animation: fadeIn 0.3s ease-out;
+    padding: 10px;
+    border: 1px solid #888;
+}
+
+.botones-container button {
+    width: 90px;
+}
+
+.botones-container.show button:last-child {
+    margin-bottom: 0;
+    border-top: none;
+}
+
+.edit-container {
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.seleccion {
+    text-align: center;
+}
+
+.seleccion .seleccion-iz{
+    border-left: none;
+    border-top: none;
+}
+
+
+.seleccion .seleccion-der {
+
+    border-right: none;
+    border-top: none;
+}
+
+.seleccion button {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #888;
+    color: #888;
+    background-color: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+.seleccion button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: whitesmoke;
+    transition: width 0.3s; 
+}
+
+.seleccion button:hover::before,
+.seleccion button:focus::before {
+    width: 100%;
+}
+
+.seleccion .seleccion-iz::before {
+    border-left: none;
+    border-top: none;
+}
+
+.seleccion .seleccion-der::before {
+    border-right: none;
+    border-top: none;
+}
+
+.contenidos{
+    padding-top: 2%;
+    padding-left: 5%;
+    padding-right: 5%;
+    color: #888;
+}
+
+.contenidos input {
+    background: transparent;
+    border: 1px solid #888;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    width: 500px;
+    margin-left: 4%;
+    margin-bottom: 2%;
+    color: whitesmoke;
+    position: relative;
+    font-size: 16px;
+    transition: border-color 0.8s ease; 
+}
+
+.contenidos input:focus {
+    outline: none;
+    border-color: whitesmoke;
+}
+
+
+.contenidos button {
+    position: relative;
+    padding: 10px;
+    border: 1px solid #888;
+    color: #888;
+    background-color: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    padding-left: 10%;
+    padding-right: 10%;
+    border-radius: 25px;
+    margin-top: 2%;
+}
+
+.contenidos button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: transparent;
+    transition: width 0.3s, background-color 0.3s; 
+}
+
+.contenidos button:hover::before,
+.contenidos button:focus::before {
+    width: 100%;
+    background-color: whitesmoke;
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

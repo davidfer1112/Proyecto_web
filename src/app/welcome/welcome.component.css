@@ -39,3 +39,22 @@
 .welcome-container .button-container{
   padding-top: 5%;
 }
+
+.licencia {
+
+
+  width: 100%;
+  text-align: left;
+  padding-right: 1500px;
+  padding-top: 100px;
+}
+
+.licencia p {
+  margin: 0;
+  font-size: 12px;
+}
+
+.licencia a {
+  color: whitesmoke; 
+  text-decoration: underline; 
+}
