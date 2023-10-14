@@ -9,8 +9,17 @@
   </div>
 
   <div class="usuario">
+    <button (click)="desplegar()" class="boton-usuario">
       <img src="assets/images/usuario.png" alt="correo" class="icono-usuario">
+    </button>
+  
+    <div class="botones-container" *ngIf="desplegarBotones" [@fadeIn]="'show'">
+      <button (click)="irAInfo()">Información</button>
+      <br>
+      <button>Ajustes</button>
+    </div>
   </div>
+  
 
 </div>
 

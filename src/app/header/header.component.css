@@ -124,3 +124,52 @@
 }
 
 
+.usuario button {
+  background: transparent;
+  margin: 0;
+  padding: 10px;
+  padding-bottom: 2px;
+  border: 1px solid #888; 
+  cursor: pointer;
+  color: #888;
+}
+
+.usuario .boton-usuario{
+  border: none;
+}
+
+.usuario button + button {
+  margin-top: 5px; 
+  border-top: 1px solid #888; 
+}
+
+.usuario {
+  position: relative;
+  color: whitesmoke;
+}
+
+.botones-container.show {
+  display: block;
+  animation: fadeIn 0.3s ease-out;
+  padding: 10px; 
+  border: 1px solid #888; 
+}
+
+.botones-container button{
+  width: 90px;
+}
+
+.botones-container.show button:last-child {
+  margin-bottom: 0; 
+  border-top: none; 
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+

@@ -13,6 +13,7 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { HeaderComponent } from './header/header.component';
 import { ListasComponent } from './listas/listas.component';
 import { ReproduccionComponent } from './reproduccion/reproduccion.component';
+import { InfoUsuarioComponent } from './info-usuario/info-usuario.component';
 
 
 
@@ -26,7 +27,8 @@ import { ReproduccionComponent } from './reproduccion/reproduccion.component';
     WelcomeComponent,
     HeaderComponent,
     ListasComponent,
-    ReproduccionComponent
+    ReproduccionComponent,
+    InfoUsuarioComponent
   ],
   imports: [
     BrowserModule,
