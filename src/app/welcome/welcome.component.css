@@ -7,6 +7,15 @@
   color: #ffffff; 
 }
 
+.welcome-container h1{
+  font-size: 70px;
+}
+
+.welcome-container img{
+  height: 400px;
+
+}
+
 .welcome-text {
   font-size: 50px; 
   margin-bottom: 10px; 
@@ -28,5 +37,5 @@
 }
 
 .welcome-container .button-container{
-  padding-top: 50%;
+  padding-top: 5%;
 }
