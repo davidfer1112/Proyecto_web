@@ -54,7 +54,7 @@
 
 .botones-container.show {
     display: block;
-    animation: fadeIn 0.3s ease-out;
+
     padding: 10px;
     border: 1px solid #888;
 }
@@ -186,13 +186,3 @@
     background-color: whitesmoke;
 }
 
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}

@@ -150,7 +150,7 @@
 
 .botones-container.show {
   display: block;
-  animation: fadeIn 0.3s ease-out;
+ 
   padding: 10px; 
   border: 1px solid #888; 
 }
@@ -162,14 +162,5 @@
 .botones-container.show button:last-child {
   margin-bottom: 0; 
   border-top: none; 
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
 }
 
