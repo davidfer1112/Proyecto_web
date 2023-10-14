@@ -4,13 +4,11 @@
   align-items: center;
   padding: 10px;
   margin-top: 20px;
+  display: flex;
+  justify-content: space-between; /* Alinear elementos al principio y al final del contenedor */
+  align-items: center;
 }
 
-
-.container-header .logo img {
-  height: 150px;
-  margin-right: 10px;
-}
 
 .barra {
   flex: 1;
@@ -33,6 +31,7 @@
   box-sizing: border-box;
   border-radius: 40px;
   color: whitesmoke;
+  width: 160px;
   font-size: 15px;
 }
 
@@ -117,6 +116,11 @@
 .search input:focus + div svg {
   stroke-dasharray: 150 212.908;
   stroke-dashoffset: 300;
+}
+
+.container-header img{
+  height: 60px;
+  padding-right: 20px;
 }
 
 
