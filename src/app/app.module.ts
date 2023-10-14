@@ -12,6 +12,7 @@ import { MainAdminComponent } from './main-admin/main-admin.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { HeaderComponent } from './header/header.component';
 import { ListasComponent } from './listas/listas.component';
+import { ReproduccionComponent } from './reproduccion/reproduccion.component';
 
 
 
@@ -24,7 +25,8 @@ import { ListasComponent } from './listas/listas.component';
     MainAdminComponent,
     WelcomeComponent,
     HeaderComponent,
-    ListasComponent
+    ListasComponent,
+    ReproduccionComponent
   ],
   imports: [
     BrowserModule,

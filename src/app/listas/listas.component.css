@@ -35,18 +35,17 @@
 }
 
 .boton-gusta {
-    /* Agrega estilos según tus preferencias */
     border: none;
     background-color: transparent;
     cursor: pointer;
 }
 
 .boton-gusta img {
-    transition: opacity 0.5s cubic-bezier(.175, .885, .32, 1.275); /* Transición de 0.5 segundos con un efecto ease */
+    transition: opacity 0.5s cubic-bezier(.175, .885, .32, 1.275); 
 }
 
 .boton-gusta.liked img {
-    opacity: 0.7; /* Opacidad reducida cuando está liked */
+    opacity: 0.7; 
 }
 
 .info{

@@ -18,10 +18,9 @@ export class ListasComponent {
   }
 
   cambiarImagen() {
-    // Agregar un retraso antes de cambiar la imagen
     setTimeout(() => {
       this.indiceImagenActual = (this.indiceImagenActual + 1) % this.imagenesLike.length;
-    }, 100); // 100 milisegundos de retraso (puedes ajustar según tus preferencias)
+    }, 100); 
   }
 }
 

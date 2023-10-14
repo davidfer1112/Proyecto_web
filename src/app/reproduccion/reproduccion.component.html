@@ -1,0 +1,19 @@
+<div class="player-container">
+
+    <div class="song-container">
+        <img [src]="imagenAlbum" alt="imagen album" class="imagen-cancion" [class.rotating]="reproduciendo">
+        <div class="song-details">
+          <h3>titulo</h3>
+          <p>artista</p>
+        </div>
+      </div>
+
+    <div class="controls">
+        <button type="button" class="boton-play" (click)="toggleReproduccion()">
+          <img [src]="imagenPlayPause" alt="play">
+        </button>
+        <button type="button" class="boton-gusta" (click)="cambiarImagen()">
+          <img [src]="imagenLike" alt="like">
+        </button>
+    </div>
+</div>
