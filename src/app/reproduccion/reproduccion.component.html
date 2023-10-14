@@ -8,6 +8,15 @@
         </div>
       </div>
 
+      <div class="progress-bar-container">
+        <div class="progress-bar" [style.width]="barraProgreso + '%'"></div>
+        <div class="time-labels">
+            <span>{{ formatearTiempo(tiempoTranscurrido) }}</span>
+            <span>{{ formatearTiempo(duracionTotal) }}</span>
+          </div>
+      </div>
+      
+
     <div class="controls">
         <button type="button" class="boton-play" (click)="toggleReproduccion()">
           <img [src]="imagenPlayPause" alt="play">

@@ -79,4 +79,25 @@
       transform: rotate(360deg);
     }
 }
+
+
+.progress-bar-container {
+    position: relative;
+    height: 20px; 
+    width: 50%;
+    background-color: #888; 
+    border-radius: 20px;
+  }
+  
+  .progress-bar {
+    height: 100%;
+    background-color: whitesmoke; 
+    border-radius: 20px;
+  }
+  
+  .time-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+  }
   

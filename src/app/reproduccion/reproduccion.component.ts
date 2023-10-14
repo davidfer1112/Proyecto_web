@@ -13,6 +13,10 @@ export class ReproduccionComponent {
 
   indiceImagenActual = 0;
   reproduciendo = false;
+  duracionTotal = 20; 
+  tiempoTranscurrido = 0; 
+  barraProgreso = 0;
+  intervaloBarraProgreso: any;
 
   get imagenLike(): string {
     return this.imagenesLike[this.indiceImagenActual];
@@ -32,10 +36,56 @@ export class ReproduccionComponent {
     return this.reproduciendo ? 'assets/images/disco.png' : 'assets/images/disco.png';
   }
 
-  toggleReproduccion() {
-    this.reproduciendo = !this.reproduciendo;
+  iniciarBarraDeProgreso() {
+    const intervalo = 1000; // Actualizar cada segundo
+    this.tiempoTranscurrido = 0;
+    this.barraProgreso = 0;
+  
+    this.actualizarBarraDeProgreso(); // Actualizar inicialmente
+  
+    this.intervaloBarraProgreso = setInterval(() => {
+      this.tiempoTranscurrido += 1;
+  
+      if (this.tiempoTranscurrido >= this.duracionTotal) {
+        this.tiempoTranscurrido = 0; // Reiniciar tiempo transcurrido
+        this.barraProgreso = 0; // Reiniciar barra de progreso
+        this.toggleReproduccion(); // Detener reproducción al alcanzar la duración total
+      } else {
+        this.actualizarBarraDeProgreso();
+      }
+    }, intervalo);
+  }
+  
+  
+  detenerBarraDeProgreso() {
+    clearInterval(this.intervaloBarraProgreso);
   }
 
+  toggleReproduccion() {
+    this.reproduciendo = !this.reproduciendo;
   
+    if (this.reproduciendo) {
+      this.iniciarBarraDeProgreso();
+    } else {
+      this.detenerBarraDeProgreso();
+    }
+  }
+
+  actualizarBarraDeProgreso() {
+    this.barraProgreso = (this.tiempoTranscurrido / this.duracionTotal) * 100;
+  
+    if (this.barraProgreso > 100) {
+      this.barraProgreso = 100;
+    }
+  }
+
+  formatearTiempo(tiempo: number): string {
+    const minutos = Math.floor(tiempo / 60);
+    const segundos = tiempo % 60;
+    const minutosFormateados = minutos < 10 ? `0${minutos}` : minutos;
+    const segundosFormateados = segundos < 10 ? `0${segundos}` : segundos;
+
+    return `${minutosFormateados}:${segundosFormateados}`;
+  }
 
 }
