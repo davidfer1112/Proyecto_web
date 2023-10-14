@@ -1,0 +1,60 @@
+.lista-item {
+    border-bottom: 1px solid #31353b;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #888;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.lista-item {
+    cursor: pointer;
+}
+
+.lista-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.lista-item .contenido {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+}
+
+.lista-item .info {
+    flex-grow: 1;
+}
+
+.lista-item h4,
+.lista-item p {
+    margin: 0;
+}
+
+.boton-gusta {
+    /* Agrega estilos según tus preferencias */
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.boton-gusta img {
+    transition: opacity 0.5s cubic-bezier(.175, .885, .32, 1.275); /* Transición de 0.5 segundos con un efecto ease */
+}
+
+.boton-gusta.liked img {
+    opacity: 0.7; /* Opacidad reducida cuando está liked */
+}
+
+.info{
+    display: flex;
+    align-items: baseline;
+}
+
+.info h4{
+    margin-right: 12%;
+    margin-left: 15px;
+}

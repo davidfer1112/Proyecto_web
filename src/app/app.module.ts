@@ -11,6 +11,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { MainAdminComponent } from './main-admin/main-admin.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { HeaderComponent } from './header/header.component';
+import { ListasComponent } from './listas/listas.component';
 
 
 
@@ -22,7 +23,8 @@ import { HeaderComponent } from './header/header.component';
     PageNotFoundComponent,
     MainAdminComponent,
     WelcomeComponent,
-    HeaderComponent
+    HeaderComponent,
+    ListasComponent
   ],
   imports: [
     BrowserModule,
