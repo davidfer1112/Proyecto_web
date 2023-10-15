@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BackendService } from '../../services/Cancion/cancion.service';
+import { CancionService } from '../../services/Cancion/cancion.service';
 
 
 @Component({
@@ -12,7 +12,7 @@ export class HomeComponent implements OnInit {
 
   datos:any
 
-  constructor(private servicio: BackendService){}
+  constructor(private servicio: CancionService){}
 
   ngOnInit(): void {
     this.servicio.obtenerDatos().subscribe(
