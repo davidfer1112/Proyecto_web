@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { CancionModel } from 'src/app/models/Cancion.model';
 
 
 @Component({
@@ -19,6 +20,14 @@ export class InterfazAdminComponent {
   listaSeleccionada = true;
   cancionSeleccionada = false;
   nombreLista = null
+
+  cancion: CancionModel ={
+    album: "",
+    artista: "",
+    duracion: "",
+    nombre: ""
+  }
+
 
   irAHome(){
     this.router.navigate(['/home']);
@@ -54,7 +63,7 @@ export class InterfazAdminComponent {
       this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ingreso un nombre de lista' });
     }
     else{
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'La lista se ha creado con éxito.' });
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: `La lista ${this.nombreLista} se ha creado con éxito.` });
     }
 
     if (form) {
@@ -63,12 +72,19 @@ export class InterfazAdminComponent {
   }
 
   agregarCancion(form: NgForm) {
-  
 
-    if (this.messageService) {
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'La canción se ha agregado con éxito.' });
-    } else {
-      console.error('MessageService no está disponible.');
+    var artista = this.cancion.artista
+    var album = this.cancion.album
+    var nombre = this.cancion.nombre
+    var duracion = this.cancion.duracion
+
+    if(artista == null || artista == "" ||
+       album == null || album == "" ||
+       nombre == null || nombre == "" ||
+       duracion == null || duracion == ""){
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Asegurate de llenar todos los espacios' });
+    }else{
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: `La cancion ${nombre} se agrego con exito`});
     }
 
     if (form) {

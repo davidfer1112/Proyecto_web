@@ -32,21 +32,21 @@
                 <input type="text" placeholder="Heavy Metal" required [(ngModel)]="nombreLista" name="nombreLista">
                 <br> 
                 <button type="submit">Crear Lista</button>
-              </form>
+            </form>
 
-              <form class="contenido-cancion" *ngIf="cancionSeleccionada" #cancionForm="ngForm" (ngSubmit)="agregarCancion(cancionForm)">
+            <form class="contenido-cancion" *ngIf="cancionSeleccionada" #cancionForm="ngForm" (ngSubmit)="agregarCancion(cancionForm)">
 
                 <p>Nombre de la cancion: </p>
-                <input type="text" placeholder="Do i matter to me" required>
+                <input type="text" placeholder="Do i matter to me" required [(ngModel)]="cancion.nombre" name="nombre">
 
                 <p>Artista: </p>
-                <input type="text" placeholder="Joji" required>
+                <input type="text" placeholder="Joji" required [(ngModel)]="cancion.artista" name="artista">
 
                 <p>Nombre de la lista: </p>
-                <input type="text" placeholder="Sad" required>
+                <input type="text" placeholder="Sad" required [(ngModel)]="cancion.album" name="album">
 
                 <p>Duracion: </p>
-                <input type="text" placeholder="01:25" required>
+                <input type="text" placeholder="01:25" required [(ngModel)]="cancion.duracion" name="album">
                 
                 <br>
                 <button type="submit">Agregar cancion</button>
