@@ -27,14 +27,14 @@
         </div>
         
         <div class="contenidos">
-            <form class="contenido-lista" *ngIf="listaSeleccionada">
+            <form class="contenido-lista" *ngIf="listaSeleccionada" #listaForm="ngForm" (ngSubmit)="crearLista(listaForm)">
                 <p>Nombre de la lista (Genero): </p>
-                <input type="text" placeholder="Heavy Metal" required>
+                <input type="text" placeholder="Heavy Metal" required [(ngModel)]="nombreLista" name="nombreLista">
                 <br> 
                 <button type="submit">Crear Lista</button>
-            </form>
+              </form>
 
-            <form class="contenido-cancion" *ngIf="cancionSeleccionada">
+              <form class="contenido-cancion" *ngIf="cancionSeleccionada" #cancionForm="ngForm" (ngSubmit)="agregarCancion(cancionForm)">
 
                 <p>Nombre de la cancion: </p>
                 <input type="text" placeholder="Do i matter to me" required>
@@ -57,3 +57,6 @@
         
 
 </div>
+
+<p-toast></p-toast>
+
