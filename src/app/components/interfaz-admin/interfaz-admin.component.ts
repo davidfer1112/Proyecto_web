@@ -18,7 +18,7 @@ export class InterfazAdminComponent {
   desplegarBotones = false;
   listaSeleccionada = true;
   cancionSeleccionada = false;
-  nombreLista = ""
+  nombreLista = null
 
   irAHome(){
     this.router.navigate(['/home']);
@@ -50,12 +50,12 @@ export class InterfazAdminComponent {
 
     console.log('Nombre de la lista:', this.nombreLista);
 
-    if (this.messageService) {
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'La lista se ha creado con éxito.' });
-    } else {
-      console.error('MessageService no está disponible.');
+    if(this.nombreLista == null){
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ingreso un nombre de lista' });
     }
-
+    else{
+      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'La lista se ha creado con éxito.' });
+    }
 
     if (form) {
       form.reset();
@@ -63,7 +63,7 @@ export class InterfazAdminComponent {
   }
 
   agregarCancion(form: NgForm) {
-    // Aquí puedes agregar lógica para guardar la canción
+  
 
     if (this.messageService) {
       this.messageService.add({ severity: 'success', summary: 'Éxito', detail: 'La canción se ha agregado con éxito.' });

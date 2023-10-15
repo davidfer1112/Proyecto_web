@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { InfoUsuarioComponent } from './info-usuario/info-usuario.component';
-import { InterfazAdminComponent } from './interfaz-admin/interfaz-admin.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { InfoUsuarioComponent } from './components/info-usuario/info-usuario.component';
+import { InterfazAdminComponent } from './components/interfaz-admin/interfaz-admin.component';
 
 const routes: Routes = [
   {path: 'login',component: LoginComponent},

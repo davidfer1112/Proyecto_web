@@ -10,16 +10,16 @@ import { MessageService } from 'primeng/api';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { HomeComponent } from './home/home.component';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { MainAdminComponent } from './main-admin/main-admin.component';
-import { WelcomeComponent } from './welcome/welcome.component';
-import { HeaderComponent } from './header/header.component';
-import { ListasComponent } from './listas/listas.component';
-import { ReproduccionComponent } from './reproduccion/reproduccion.component';
-import { InfoUsuarioComponent } from './info-usuario/info-usuario.component';
-import { InterfazAdminComponent } from './interfaz-admin/interfaz-admin.component';
+import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { MainAdminComponent } from './components/main-admin/main-admin.component';
+import { WelcomeComponent } from './components/welcome/welcome.component';
+import { HeaderComponent } from './components/header/header.component';
+import { ListasComponent } from './components/listas/listas.component';
+import { ReproduccionComponent } from './components/reproduccion/reproduccion.component';
+import { InfoUsuarioComponent } from './components/info-usuario/info-usuario.component';
+import { InterfazAdminComponent } from './components/interfaz-admin/interfaz-admin.component';
 
 
 
