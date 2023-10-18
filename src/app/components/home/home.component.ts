@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CancionService } from '../../services/Cancion/cancion.service';
 import { ListaService } from 'src/app/services/Lista/lista.service';
+import { ListaModel } from 'src/app/models/Lista.model';
 
 
 @Component({
@@ -10,22 +11,19 @@ import { ListaService } from 'src/app/services/Lista/lista.service';
 })
 
 export class HomeComponent implements OnInit {
+  datos: ListaModel[] = [];
 
-  datos:any
-
-  constructor(private servicio: CancionService, private serviciolista: ListaService){}
+  constructor(private servicio: CancionService, private serviciolista: ListaService) {}
 
   ngOnInit(): void {
-    // this.servicio.obtenerDatos().subscribe(
     this.serviciolista.getListas().subscribe(
-      (response) => {
+      (response: ListaModel[]) => {
         this.datos = response;
         console.log('Datos obtenidos:', this.datos);
       },
       (error) => {
-        console.error("Error al ontener los datos", error)
+        console.error("Error al obtener los datos", error);
       }
-    )
+    );
   }
-
 }
