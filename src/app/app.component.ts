@@ -12,14 +12,5 @@ export class AppComponent {
   constructor(private router: Router){}
 
 
-  iniciarSesion() {
-    console.log('Iniciando sesión...');
-    this.router.navigateByUrl('/login')
-  }
-
-  registrarse() {
-    console.log('Registrándose...');
-  }
-
 
 }

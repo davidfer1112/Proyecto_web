@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-listas',
@@ -6,6 +6,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./listas.component.css']
 })
 export class ListasComponent {
+  @Input() listas: any[] = [];
   imagenesLike = [
     'assets/images/gusta.png',
     'assets/images/gustaRelleno.png'

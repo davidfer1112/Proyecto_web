@@ -8,7 +8,7 @@ import { ListaModel } from 'src/app/models/Lista.model';
 })
 export class ListaService {
 
-  private URI = "http://localhost:8000"
+  private URI = "http://localhost:8080"
 
   constructor(private http: HttpClient) { }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CancionService } from '../../services/Cancion/cancion.service';
+import { ListaService } from 'src/app/services/Lista/lista.service';
 
 
 @Component({
@@ -12,10 +13,11 @@ export class HomeComponent implements OnInit {
 
   datos:any
 
-  constructor(private servicio: CancionService){}
+  constructor(private servicio: CancionService, private serviciolista: ListaService){}
 
   ngOnInit(): void {
-    this.servicio.obtenerDatos().subscribe(
+    // this.servicio.obtenerDatos().subscribe(
+    this.serviciolista.getListas().subscribe(
       (response) => {
         this.datos = response;
         console.log('Datos obtenidos:', this.datos);
