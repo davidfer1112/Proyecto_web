@@ -91,7 +91,6 @@ export class WelcomeComponent {
   async particlesInit(engine: Engine): Promise<void> {
     console.log(engine);
 
-    // Aquí puedes realizar más configuraciones si es necesario
 
     await loadSlim(engine);
   }
