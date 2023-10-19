@@ -7,6 +7,7 @@ import { PersonaService } from 'src/app/services/Persona/persona.service';
 import { MessageService } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -20,10 +21,11 @@ export class LoginComponent {
   constructor(
     private router: Router,
     private messageService: MessageService,
-    private renderer: Renderer2, 
+    private renderer: Renderer2,
     private el: ElementRef,
     private personaService: PersonaService,
-) {}
+    private route: ActivatedRoute  // Agrega ActivatedRoute a la lista de dependencias
+  ) {}
 
   persona: PersonaModel = {
     apellido: '',
@@ -31,6 +33,8 @@ export class LoginComponent {
     correo_electronico: '',
     nombre: '',
   };
+
+  esAdmin: boolean = false;
 
 
   @ViewChild('formLogin') formLogin!: NgForm;
@@ -44,9 +48,8 @@ export class LoginComponent {
   }
 
   inicioSesion(formLogin: NgForm) {
-
-    console.log(this.persona.correo_electronico , this.persona.contrasenia)
-
+    console.log(this.persona.correo_electronico, this.persona.contrasenia);
+  
     if (!this.persona.correo_electronico || !this.persona.contrasenia) {
       this.messageService.add({
         severity: 'error',
@@ -55,13 +58,14 @@ export class LoginComponent {
       });
       return;
     }
-
+  
     // Verificar si el correo existe
     this.personaService.checkCorreoExistente(this.persona.correo_electronico).subscribe(
       (correoExistente) => {
         if (correoExistente) {
-          
-          this.router.navigate(['/home']);
+          // Si el checkbox de administrador está marcado, redirige a /home/admin, de lo contrario a /home
+          const rutaDestino = this.esAdmin ? '/home/admin' : '/home';
+          this.router.navigate([rutaDestino]);
         } else {
           // Mostrar mensaje de Toast si el correo no existe
           this.messageService.add({
@@ -76,6 +80,7 @@ export class LoginComponent {
       }
     );
   }
+  
 
 
   registrarPersona() {

@@ -23,6 +23,11 @@
                     <input type="password" required [(ngModel)]="persona.contrasenia" name="contrasenia">
                     <label>Contraseña</label>
                 </div>
+
+                <div class="container-checkbox">
+                    <input type="checkbox" [(ngModel)]="esAdmin" name="esAdmin">
+                    <label>¿Eres admin?</label>
+                </div>
                 
                 <button type="submit" class="boton-login" (click)="inicioSesion(formLogin)">Iniciar sesión</button>
                 <div class="iniciosesion-registro">
