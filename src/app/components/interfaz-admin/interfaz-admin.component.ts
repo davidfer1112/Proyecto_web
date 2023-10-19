@@ -25,7 +25,9 @@ export class InterfazAdminComponent {
     album: "",
     artista: "",
     duracion: "",
-    nombre: ""
+    nombre: "",
+    num_likes: 0,
+    id_lista: 0
   }
 
 
