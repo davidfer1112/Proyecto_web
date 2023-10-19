@@ -20,6 +20,8 @@ import { ListasComponent } from './components/listas/listas.component';
 import { ReproduccionComponent } from './components/reproduccion/reproduccion.component';
 import { InfoUsuarioComponent } from './components/info-usuario/info-usuario.component';
 import { InterfazAdminComponent } from './components/interfaz-admin/interfaz-admin.component';
+import { HomeAdminComponent } from './components/home-admin/home-admin.component';
+import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
 
 
 
@@ -35,7 +37,9 @@ import { InterfazAdminComponent } from './components/interfaz-admin/interfaz-adm
     ListasComponent,
     ReproduccionComponent,
     InfoUsuarioComponent,
-    InterfazAdminComponent
+    InterfazAdminComponent,
+    HomeAdminComponent,
+    HeaderAdminComponent
   ],
   imports: [
     BrowserModule,
