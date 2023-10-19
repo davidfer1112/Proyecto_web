@@ -70,6 +70,7 @@ export class InterfazAdminComponent {
   }
 
   crearLista(form: NgForm) {
+    let nombrelist = this.nombreLista
     if (this.nombreLista == null) {
       this.messageService.add({
         severity: 'error',
@@ -87,7 +88,7 @@ export class InterfazAdminComponent {
           this.messageService.add({
             severity: 'success',
             summary: 'Éxito',
-            detail: `La lista ${this.nombreLista} se ha creado con éxito.`
+            detail: `La lista ${nombrelist} se ha creado con éxito.`
           });
 
         },
