@@ -9,7 +9,7 @@ import { CancionModel } from 'src/app/models/Cancion.model';
 export class CancionService {
 
 
-  private URI = "http://localhost:8000"
+  private URI = "http://localhost:8080"
 
   constructor(private http: HttpClient) { }
 
