@@ -1,5 +1,6 @@
 
 export interface AdminModel{
-    nombre: string;
+    id_admin?: number;
     contrasenia: string;
+    nombre: string;
 }
