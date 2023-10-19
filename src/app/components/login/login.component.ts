@@ -6,6 +6,7 @@ import { PersonaModel } from 'src/app/models/Persona.models';
 import { PersonaService } from 'src/app/services/Persona/persona.service';
 import { MessageService } from 'primeng/api';
 import { NgForm } from '@angular/forms';
+import { ViewChild } from '@angular/core';
 
 
 
@@ -32,14 +33,48 @@ export class LoginComponent {
   };
 
 
+  @ViewChild('formLogin') formLogin!: NgForm;
+  @ViewChild('formRegistro') formRegistro!: NgForm;
+
+
 
   toggleForm() {
     const containerFormulario = this.el.nativeElement.querySelector('.container-fomulario');
     containerFormulario.classList.toggle('active');
   }
 
-  inicioSesion() {
-    this.router.navigate(['/home']);
+  inicioSesion(formLogin: NgForm) {
+
+    console.log(this.persona.correo_electronico , this.persona.contrasenia)
+
+    if (!this.persona.correo_electronico || !this.persona.contrasenia) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Por favor, complete todos los campos.'
+      });
+      return;
+    }
+
+    // Verificar si el correo existe
+    this.personaService.checkCorreoExistente(this.persona.correo_electronico).subscribe(
+      (correoExistente) => {
+        if (correoExistente) {
+          
+          this.router.navigate(['/home']);
+        } else {
+          // Mostrar mensaje de Toast si el correo no existe
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Correo electrónico no encontrado. Verifica tus credenciales.'
+          });
+        }
+      },
+      (error) => {
+        console.error('Error al verificar correo electrónico:', error);
+      }
+    );
   }
 
 
