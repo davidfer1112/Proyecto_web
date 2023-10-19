@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { CancionModel } from 'src/app/models/Cancion.model';
+import { ListaModel } from 'src/app/models/Lista.model';
+import { ListaService } from 'src/app/services/Lista/lista.service';
 
 
 @Component({
@@ -10,10 +12,16 @@ import { CancionModel } from 'src/app/models/Cancion.model';
   templateUrl: './interfaz-admin.component.html',
   styleUrls: ['./interfaz-admin.component.css']
 })
+
+
 export class InterfazAdminComponent {
 
 
-  constructor(private router: Router,private messageService: MessageService) {}
+  constructor(
+    private router: Router,
+    private messageService: MessageService,
+    private listaService: ListaService  
+  ) {}
 
 
   desplegarBotones = false;
@@ -58,14 +66,36 @@ export class InterfazAdminComponent {
   }
 
   crearLista(form: NgForm) {
+    if (this.nombreLista == null) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'No se ingresó un nombre de lista'
+      });
+    } else {
+      const nuevaLista: ListaModel = {
+        genero: this.nombreLista,
+        num_likes: 0 
+      };
 
-    console.log('Nombre de la lista:', this.nombreLista);
+      this.listaService.createLista(nuevaLista).subscribe(
+        (response) => {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Éxito',
+            detail: `La lista ${this.nombreLista} se ha creado con éxito.`
+          });
 
-    if(this.nombreLista == null){
-      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se ingreso un nombre de lista' });
-    }
-    else{
-      this.messageService.add({ severity: 'success', summary: 'Éxito', detail: `La lista ${this.nombreLista} se ha creado con éxito.` });
+        },
+        (error) => {
+          console.error('Error al crear la lista:', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Error al crear la lista. Consulta la consola para más detalles.'
+          });
+        }
+      );
     }
 
     if (form) {
