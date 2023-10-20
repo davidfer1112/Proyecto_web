@@ -6,6 +6,8 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { InfoUsuarioComponent } from './components/info-usuario/info-usuario.component';
 import { InterfazAdminComponent } from './components/interfaz-admin/interfaz-admin.component';
+import { HomeAdminComponent } from './components/home-admin/home-admin.component';
+import { AlbumComponent } from './components/album/album.component';
 
 const routes: Routes = [
   {path: 'login',component: LoginComponent},
@@ -13,6 +15,8 @@ const routes: Routes = [
   {path: 'welcome', component: WelcomeComponent},
   {path: 'info/usuario', component: InfoUsuarioComponent},
   {path: 'admin', component: InterfazAdminComponent},
+  {path: 'home/admin', component: HomeAdminComponent},
+  {path: 'album',component: AlbumComponent},
   {path: '', redirectTo: 'welcome', pathMatch: 'full'}, // c  ando se entra a la ruta inicial me redirige a la ruta home
   {path: '**', component: PageNotFoundComponent} // cuando no encuentra la ruta me redirige a pagina no encontrada
 ];

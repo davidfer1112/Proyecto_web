@@ -12,25 +12,24 @@
 
         <div class="container-form login">
             <h2>Inicio de sesión</h2>
-            <form action="">
+            <form action="" #formLogin="ngForm">
                 <div class="container-input">
                     <img src="assets/images/correo.png" alt="correo" class="icono">
-                    <input type="email" required>
+                    <input type="email" required [(ngModel)]="persona.correo_electronico" name="correo">
                     <label>Email</label>
                 </div>
                 <div class="container-input">
                     <img src="assets/images/candado.png" alt="Contraseña" class="icono" id="password">
-                    <input type="password" required>
+                    <input type="password" required [(ngModel)]="persona.contrasenia" name="contrasenia">
                     <label>Contraseña</label>
                 </div>
-                <div class="recuerdame-olvido">
-                    <label class="">
-                        <input type="checkbox">
-                        Recordarme
-                    </label>
-                    <a href="">¿Olvidaste tu contraseña?</a>
+
+                <div class="container-checkbox">
+                    <input type="checkbox" [(ngModel)]="esAdmin" name="esAdmin">
+                    <label>¿Eres admin?</label>
                 </div>
-                <button type="submit" class="boton-login" (click)="inicioSesion()">Iniciar sesión</button>
+                
+                <button type="submit" class="boton-login" (click)="inicioSesion(formLogin)">Iniciar sesión</button>
                 <div class="iniciosesion-registro">
                     <p>¿No tienes cuenta?
                         <a class="registro-link" (click)="toggleForm()">Registro</a>
@@ -41,40 +40,41 @@
 
         <div class="container-form register">
             <h2>Registro</h2>
-            <form action="" class="registro">
+            <form action="" class="registro" (ngSubmit)="registrarPersona()" #formRegistro="ngForm">
                 <div class="container-input">
-                    <img src="assets/images/usuario.png" alt="correo" class="icono">
-                    <input type="text" required>
-                    <label>Nombre de Usuaio</label>
+                    <img src="assets/images/usuario.png" alt="Nombre" class="icono">
+                    <input type="text" required [(ngModel)]="persona.nombre" name="nombre">
+                    <label>Nombre</label>
                 </div>
                 <div class="container-input">
-                    <img src="assets/images/correo.png" alt="correo" class="icono">
-                    <input type="email" required>
+                    <img src="assets/images/usuario.png" alt="Apellido" class="icono">
+                    <input type="text" required [(ngModel)]="persona.apellido" name="apellido">
+                    <label>Apellido</label>
+                </div>
+                <div class="container-input">
+                    <img src="assets/images/correo.png" alt="Correo" class="icono">
+                    <input type="email" required [(ngModel)]="persona.correo_electronico" name="correo">
                     <label>Email</label>
                 </div>
                 <div class="container-input">
                     <img src="assets/images/candado.png" alt="Contraseña" class="icono" id="password">
-                    <input type="password" required>
+                    <input type="password" required [(ngModel)]="persona.contrasenia" name="contrasenia">
                     <label>Contraseña</label>
                 </div>
-                <div class="recuerdame-olvido">
-                    <label class="">
-                        <input type="checkbox">
-                        Acepta términos y condiciones
-                    </label>
-                </div>
-                <button type="submit" class="boton-login">Registro</button>
+                <button type="submit" class="boton-login" (click)="registrarPersona()">Registro</button>
                 <div class="iniciosesion-registro">
                     <p>¿Ya tienes cuenta?
                         <a class="login-link" (click)="toggleForm()">Inicia sesión</a>
                     </p>
                 </div>
             </form>
+            
         </div>
 
     </div>
 
 
-    
-
 </div>
+
+
+<p-toast></p-toast>

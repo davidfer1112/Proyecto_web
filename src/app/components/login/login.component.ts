@@ -2,6 +2,13 @@ import { Component, Renderer2, ElementRef } from '@angular/core';
 import { MoveDirection, ClickMode, HoverMode, OutMode, Container, Engine } from "tsparticles-engine";
 import { loadSlim } from "tsparticles-slim";
 import { Router } from '@angular/router';
+import { PersonaModel } from 'src/app/models/Persona.models';
+import { PersonaService } from 'src/app/services/Persona/persona.service';
+import { MessageService } from 'primeng/api';
+import { NgForm } from '@angular/forms';
+import { ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+
 
 
 @Component({
@@ -11,18 +18,124 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
 
-  constructor(private router: Router, private renderer: Renderer2, private el: ElementRef) {}
+  constructor(
+    private router: Router,
+    private messageService: MessageService,
+    private renderer: Renderer2,
+    private el: ElementRef,
+    private personaService: PersonaService,
+    private route: ActivatedRoute  // Agrega ActivatedRoute a la lista de dependencias
+  ) {}
+
+  persona: PersonaModel = {
+    apellido: '',
+    contrasenia: '',
+    correo_electronico: '',
+    nombre: '',
+  };
+
+  esAdmin: boolean = false;
+
+
+  @ViewChild('formLogin') formLogin!: NgForm;
+  @ViewChild('formRegistro') formRegistro!: NgForm;
+
+
 
   toggleForm() {
     const containerFormulario = this.el.nativeElement.querySelector('.container-fomulario');
     containerFormulario.classList.toggle('active');
   }
 
-  inicioSesion() {
-    this.router.navigate(['/home']);
+  inicioSesion(formLogin: NgForm) {
+    console.log(this.persona.correo_electronico, this.persona.contrasenia);
+  
+    if (!this.persona.correo_electronico || !this.persona.contrasenia) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Por favor, complete todos los campos.'
+      });
+      return;
+    }
+  
+    // Verificar si el correo existe
+    this.personaService.checkCorreoExistente(this.persona.correo_electronico).subscribe(
+      (correoExistente) => {
+        if (correoExistente) {
+          // Si el checkbox de administrador está marcado, redirige a /home/admin, de lo contrario a /home
+          const rutaDestino = this.esAdmin ? '/home/admin' : '/home';
+          this.router.navigate([rutaDestino]);
+        } else {
+          // Mostrar mensaje de Toast si el correo no existe
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Correo electrónico no encontrado. Verifica tus credenciales.'
+          });
+        }
+      },
+      (error) => {
+        console.error('Error al verificar correo electrónico:', error);
+      }
+    );
   }
+  
 
 
+  registrarPersona() {
+
+    if (!this.persona.nombre || !this.persona.apellido 
+      || !this.persona.correo_electronico || !this.persona.contrasenia) {
+
+        this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Por favor, complete todos los campos.'
+        });
+        return; 
+    }
+
+    const formData = {
+        nombre: this.persona.nombre,
+        apellido: this.persona.apellido,
+        correo_electronico: this.persona.correo_electronico,
+        contrasenia: this.persona.contrasenia
+    };
+
+    this.personaService.createPersona(formData).subscribe(
+        (respuesta) => {
+            // Mostrar mensaje de Toast de éxito
+            this.messageService.add({
+                severity: 'success',
+                summary: 'Éxito',
+                detail: 'La persona se ha creado con éxito.'
+            });
+
+            setTimeout(function() {
+                location.reload();
+            }, 2000);
+
+        },
+        (error) => {
+            console.error('Error al crear persona:', error);
+
+            // Mostrar mensaje de Toast de error
+            this.messageService.add({
+                severity: 'error',
+                summary: 'Error',
+                detail: 'Error al crear la persona.'
+            });
+        }
+    );
+}
+
+
+
+
+  ////////////////////////////////
+
+  //fondo
   id = "tsparticles";
 
   particlesUrl = "http://foo.bar/particles.json";
@@ -103,8 +216,6 @@ export class LoginComponent {
 
   async particlesInit(engine: Engine): Promise<void> {
     console.log(engine);
-
-    // Aquí puedes realizar más configuraciones si es necesario
 
     await loadSlim(engine);
   }

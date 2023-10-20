@@ -1,0 +1,30 @@
+
+  
+  .music-player-container {
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .music-player-container .song-list{
+    padding-left: 60px;
+    padding-right: 60px ;
+    padding-top: 10px;
+  }
+
+  .music-player-container app-header{
+    padding-left: 20px;
+  }
+  
+  
+  .song-list {
+    background-color: #31353b;
+    padding: 10px;
+    flex-grow: 1;
+    overflow: auto;
+    margin-bottom: 100px;
+  }
+  
+  
+  

@@ -1,0 +1,12 @@
+<div class="music-player-container">
+    <app-header-admin></app-header-admin>
+    <div class="song-list">
+      <h2>Lista de Canciones</h2>
+      <div *ngFor="let lista of datos">
+        <app-listas [lista]="lista"></app-listas>
+      </div>
+    </div>
+    <app-reproduccion></app-reproduccion>
+  </div>
+  
+    

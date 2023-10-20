@@ -172,3 +172,11 @@
 .iniciosesion-registro p a:hover{
     text-decoration: underline;
 }
+
+.login-link{
+    cursor: pointer;
+}
+
+.container-checkbox{
+    padding-bottom: 20px;
+}
