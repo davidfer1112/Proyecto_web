@@ -22,6 +22,8 @@ import { InfoUsuarioComponent } from './components/info-usuario/info-usuario.com
 import { InterfazAdminComponent } from './components/interfaz-admin/interfaz-admin.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
+import { CancionesComponent } from './components/canciones/canciones.component';
+import { AlbumComponent } from './components/album/album.component';
 
 
 
@@ -39,7 +41,9 @@ import { HeaderAdminComponent } from './components/header-admin/header-admin.com
     InfoUsuarioComponent,
     InterfazAdminComponent,
     HomeAdminComponent,
-    HeaderAdminComponent
+    HeaderAdminComponent,
+    CancionesComponent,
+    AlbumComponent
   ],
   imports: [
     BrowserModule,
