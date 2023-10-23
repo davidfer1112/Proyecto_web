@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HomeAdminComponent {
   datos: ListaModel[] = [];
+  filtroTexto: string = '';
 
   constructor(
     private servicio: CancionService, 
@@ -30,6 +31,24 @@ export class HomeAdminComponent {
     );
   }
 
+
+  filtrarListas() {
+    if (this.filtroTexto.trim() !== '') {
+      this.datos = this.datos.filter(lista =>
+        lista.genero.toLowerCase().includes(this.filtroTexto.toLowerCase())
+      );
+    } else {
+      // Si el input está vacío, restaura la lista original
+      this.serviciolista.getListas().subscribe(
+        (response: ListaModel[]) => {
+          this.datos = response;
+        },
+        (error) => {
+          console.error("Error al obtener los datos", error);
+        }
+      );
+    }
+  }
 
 
 }
