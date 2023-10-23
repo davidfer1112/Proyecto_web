@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { ListaModel } from 'src/app/models/Lista.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-listas',
@@ -22,9 +23,19 @@ export class ListasComponent {
     return this.imagenesLike[this.indiceImagenActual];
   }
 
+  constructor(private router: Router) {}
+
+  // Este método se ejecuta cuando se hace click en el botón de like, para alternar entre
+  // me gusta o no la imagen
   cambiarImagen() {
     setTimeout(() => {
       this.indiceImagenActual = (this.indiceImagenActual + 1) % this.imagenesLike.length;
-    }, 100); 
+    }, 100);
   }
+
+  // Este método redirige a la página de álbum
+  navegarAAlbum() {
+    this.router.navigate(['/album']);
+  }
+
 }

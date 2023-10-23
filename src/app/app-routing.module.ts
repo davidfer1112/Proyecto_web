@@ -17,7 +17,7 @@ const routes: Routes = [
   {path: 'admin', component: InterfazAdminComponent},
   {path: 'home/admin', component: HomeAdminComponent},
   {path: 'album',component: AlbumComponent},
-  {path: '', redirectTo: 'welcome', pathMatch: 'full'}, // c  ando se entra a la ruta inicial me redirige a la ruta home
+  {path: '', redirectTo: 'welcome', pathMatch: 'full'}, // cuando se entra a la ruta inicial me redirige a la ruta home
   {path: '**', component: PageNotFoundComponent} // cuando no encuentra la ruta me redirige a pagina no encontrada
 ];
 
