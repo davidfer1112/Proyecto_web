@@ -38,7 +38,7 @@ export class InterfazAdminComponent {
     artista: "",
     duracion: "",
     nombre: "",
-    num_likes: 0,
+    numLikes: 0,
     id_lista: 0
   }
 
@@ -80,7 +80,7 @@ export class InterfazAdminComponent {
     } else {
       const nuevaLista: ListaModel = {
         genero: this.nombreLista,
-        num_likes: 0 
+        numLikes: 0 
       };
 
       this.listaService.createLista(nuevaLista).subscribe(
@@ -140,7 +140,7 @@ export class InterfazAdminComponent {
               artista: artista,
               duracion: duracion,
               nombre: nombre,
-              num_likes: 0,
+              numLikes: 0,
               id_lista: idLista,
             };
   

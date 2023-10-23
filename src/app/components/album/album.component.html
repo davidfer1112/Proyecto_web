@@ -1,1 +1,26 @@
-<p>album works!</p>
+
+<div class="container-canciones">
+
+    <div class="info-con-cancion">
+        
+        <img src="assets/images/flecha.png" alt="flecha" id="atras" (click)="irAtras()">
+
+        <div class="info-album">
+            <img src="assets/images/Caratula.jpeg" alt="Caratula">
+            <h1>{{ this.generoselec }}</h1>
+            <p>Likes: {{ numLikes }}</p>
+        </div>
+    
+        <div class="canciones">
+            <app-canciones
+                *ngFor="let cancion of canciones"
+                [nombre]="cancion.nombre"
+                [duracion]="cancion.duracion"
+                [artista]="cancion.artista"
+                [numLikes]="cancion.numLikes"
+            ></app-canciones>
+        </div>
+    </div>
+  
+    <app-reproduccion></app-reproduccion>
+</div>

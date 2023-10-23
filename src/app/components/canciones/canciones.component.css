@@ -1,0 +1,54 @@
+.cancion-item {
+    border-bottom: 1px solid #31353b;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #888;
+    border-radius: 15px;
+    margin-top: 20px;
+    position: relative;
+}
+
+.cancion-item img {
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+.cancion-item .contenido {
+    display: flex;
+    flex-grow: 1; 
+}
+
+.cancion-item .info {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.cancion-item h4,
+.cancion-item p {
+    margin: 0;
+}
+
+
+
+.info-derecha p {
+    margin: 0;
+}
+
+.boton-gusta {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-left: 10%; /* Ajusta según sea necesario */
+}
+
+.boton-gusta img {
+    transition: opacity 0.5s cubic-bezier(.175, .885, .32, 1.275);
+}
+
+.boton-gusta.liked img {
+    opacity: 0.7;
+}

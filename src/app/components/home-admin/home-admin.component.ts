@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CancionService } from '../../services/Cancion/cancion.service';
 import { ListaService } from 'src/app/services/Lista/lista.service';
 import { ListaModel } from 'src/app/models/Lista.model';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home-admin',
@@ -11,17 +13,23 @@ import { ListaModel } from 'src/app/models/Lista.model';
 export class HomeAdminComponent {
   datos: ListaModel[] = [];
 
-  constructor(private servicio: CancionService, private serviciolista: ListaService) {}
+  constructor(
+    private servicio: CancionService, 
+    private serviciolista: ListaService, 
+    private router: Router) {}
+
 
   ngOnInit(): void {
     this.serviciolista.getListas().subscribe(
       (response: ListaModel[]) => {
         this.datos = response;
-        console.log('Datos obtenidos:', this.datos);
       },
       (error) => {
         console.error("Error al obtener los datos", error);
       }
     );
   }
+
+
+
 }

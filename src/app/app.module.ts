@@ -43,7 +43,7 @@ import { AlbumComponent } from './components/album/album.component';
     HomeAdminComponent,
     HeaderAdminComponent,
     CancionesComponent,
-    AlbumComponent
+    AlbumComponent,
   ],
   imports: [
     BrowserModule,
