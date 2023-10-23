@@ -1,4 +1,5 @@
 import { Component,Input } from '@angular/core';
+import { SharedService } from 'src/app/services/Shared/shared.service';
 
 @Component({
   selector: 'app-canciones',
@@ -6,6 +7,8 @@ import { Component,Input } from '@angular/core';
   styleUrls: ['./canciones.component.css']
 })
 export class CancionesComponent {
+
+  constructor(private sharedService: SharedService) {}
 
   @Input() nombre: string = '';
   @Input() duracion: string = '';
@@ -27,6 +30,11 @@ export class CancionesComponent {
     setTimeout(() => {
       this.indiceImagenActual = (this.indiceImagenActual + 1) % this.imagenesLike.length;
     }, 100);
+  }
+
+  onCancionSeleccionada() {
+    this.sharedService.setSongInfo(this.nombre, this.artista, this.duracion);
+    this.sharedService.setDuracionActual(this.duracion); 
   }
 
 }

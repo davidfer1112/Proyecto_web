@@ -1,15 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { SharedService } from 'src/app/services/Shared/shared.service';
 
 @Component({
   selector: 'app-reproduccion',
   templateUrl: './reproduccion.component.html',
   styleUrls: ['./reproduccion.component.css']
 })
-export class ReproduccionComponent {
+export class ReproduccionComponent implements OnInit{
+
   imagenesLike = [
     'assets/images/gusta.png',
     'assets/images/gustaRelleno.png'
   ];
+
+  constructor(private sharedService: SharedService) {}
+
+  nombreCancion: string = '';
+  artistaCancion: string = '';
+  duracionCancion: string = '';
 
   indiceImagenActual = 0;
   reproduciendo = false;
@@ -17,6 +25,13 @@ export class ReproduccionComponent {
   tiempoTranscurrido = 0; 
   barraProgreso = 0;
   intervaloBarraProgreso: any;
+
+  ngOnInit() {
+    this.sharedService.nombreCancion$.subscribe((nombre) => (this.nombreCancion = nombre));
+    this.sharedService.artistaCancion$.subscribe((artista) => (this.artistaCancion = artista));
+    
+    this.sharedService.duracionActualCancion$.subscribe((duracion) => (this.duracionCancion = this.formatearTiempo(Number(duracion))));
+  }
 
   get imagenLike(): string {
     return this.imagenesLike[this.indiceImagenActual];
