@@ -44,4 +44,10 @@ export class AlbumComponent implements OnInit {
         });
     });
   }
+
+  // metodo para ir a la ruta anterior
+  irAtras() {
+    window.history.back();
+  }
+
 }
