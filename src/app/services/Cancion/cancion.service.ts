@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CancionModel } from 'src/app/models/Cancion.model';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,16 @@ export class CancionService {
   // metodo para obterner todas las canciones
   getCanciones(): Observable<any> {
     return this.http.get(`${this.URI}/cancion/list`);
+  }
+
+  // método para obtener canciones por el nombre del album
+  getCancionesPorAlbum(album: string): Observable<CancionModel[]> {
+    return this.getCanciones().pipe(
+      map((canciones: CancionModel[]) => {
+        // Filtrar las canciones por el nombre del álbum
+        return canciones.filter(c => c.album === album);
+      })
+    );
   }
 
   // metodo para obterner una cancion segun el id
@@ -37,6 +48,8 @@ export class CancionService {
   deleteCancion(id:number): Observable<any>{
     return this.http.delete(`${this.URI}/cancion/${id}`)
   }
+
+  
   
 
 
