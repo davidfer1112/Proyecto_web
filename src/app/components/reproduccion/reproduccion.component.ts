@@ -100,13 +100,22 @@ export class ReproduccionComponent implements OnInit{
   }
 
   formatearTiempo(tiempo: number | string): string {
-    const segundos = typeof tiempo === 'string' ? parseInt(tiempo, 10) : tiempo;
-    const minutos = Math.floor(segundos / 60);
-    const segundosRestantes = segundos % 60;
-    const minutosFormateados = minutos < 10 ? `0${minutos}` : minutos;
-    const segundosFormateados = segundosRestantes < 10 ? `0${segundosRestantes}` : segundosRestantes;
+    let segundos: number;
   
-    return `${minutosFormateados}:${segundosFormateados}`;
+    if (typeof tiempo === 'string') {
+      const [minutos, segundosStr] = tiempo.split(':').map(Number);
+      segundos = minutos * 60 + segundosStr;
+    } else {
+      segundos = tiempo;
+    }
+  
+    const minutosFormateados = Math.floor(segundos / 60);
+    const segundosFormateados = segundos % 60;
+  
+    const minutosStr = minutosFormateados < 10 ? `0${minutosFormateados}` : minutosFormateados;
+    const segundosStr = segundosFormateados < 10 ? `0${segundosFormateados}` : segundosFormateados;
+  
+    return `${minutosStr}:${segundosStr}`;
   }
 
 }
