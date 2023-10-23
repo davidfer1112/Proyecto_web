@@ -4,7 +4,7 @@
     <h2>Lista de Generos</h2>
 
     <div class="search">
-      <input type="text" placeholder="">
+      <input type="text" placeholder="" [(ngModel)]="filtroTexto" (keyup.enter)="filtrarListas()">
       <div>
           <svg>
               <use xlink:href="#path"></use>
@@ -18,6 +18,8 @@
   </div>
   <app-reproduccion></app-reproduccion>
 </div>
+
+<p-toast></p-toast>
 
 <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
   <symbol xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 28" id="path">
