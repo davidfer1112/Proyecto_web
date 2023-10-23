@@ -80,7 +80,7 @@ export class InterfazAdminComponent {
     } else {
       const nuevaLista: ListaModel = {
         genero: this.nombreLista,
-        num_likes: 0 
+        numLikes: 0 
       };
 
       this.listaService.createLista(nuevaLista).subscribe(

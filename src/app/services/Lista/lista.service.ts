@@ -47,4 +47,16 @@ export class ListaService {
       })
     );
   }
+
+  // Método para obtener el num_likes de la lista por nombre
+getNumLikesPorNombre(nombreLista: string): Observable<number | undefined> {
+  return this.getListas().pipe(
+    map((listas: ListaModel[]) => {
+      const listaEncontrada = listas.find(lista => lista.genero === nombreLista);
+      return listaEncontrada ? listaEncontrada.numLikes : undefined;
+    })
+  );
+}
+
+
 }

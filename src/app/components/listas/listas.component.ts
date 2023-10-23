@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 })
 
 export class ListasComponent {
-  @Input() lista: ListaModel = { genero: '', num_likes: 0 };
+  @Input() lista: ListaModel = { genero: '', numLikes: 0 };
 
   imagenesLike = [
     'assets/images/gusta.png',

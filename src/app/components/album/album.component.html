@@ -1,1 +1,18 @@
-<p>album works!</p>
+
+<div class="container-canciones">
+
+    <div class="info-con-cancion">
+        
+        <div class="info-album">
+            <img src="assets/images/Caratula.jpeg" alt="">
+            <h1>{{ this.generoselec }}</h1>
+            <p>Likes: {{ numLikes }}</p>
+        </div>
+    
+        <div class="canciones">
+            <app-canciones></app-canciones>
+        </div>
+    </div>
+  
+    <app-reproduccion></app-reproduccion>
+</div>

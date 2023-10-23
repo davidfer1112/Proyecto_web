@@ -1,0 +1,39 @@
+
+.container-canciones {
+    color: whitesmoke;
+}
+
+.info-con-cancion{
+    padding-left: 4%;
+    padding-right: 4%;
+    padding-top: 1%;
+}
+
+.info-album{
+    padding-bottom: 10%;
+}
+
+.info-album img {
+    width: 200px; 
+    height: auto; 
+    float: left; 
+    margin-right: 20px; 
+}
+
+.info-album h1,
+.info-album p {
+    display: block; 
+}
+
+.info-album p {
+    margin-top: 10px;
+}
+
+.titulo-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+
+
+  
