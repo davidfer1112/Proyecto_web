@@ -5,6 +5,6 @@ export interface CancionModel{
     artista: string;
     duracion: string;
     nombre:string;
-    num_likes:number;
+    numLikes:number;
     id_lista:number;
 }

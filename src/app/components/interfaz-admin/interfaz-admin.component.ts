@@ -38,7 +38,7 @@ export class InterfazAdminComponent {
     artista: "",
     duracion: "",
     nombre: "",
-    num_likes: 0,
+    numLikes: 0,
     id_lista: 0
   }
 
@@ -140,7 +140,7 @@ export class InterfazAdminComponent {
               artista: artista,
               duracion: duracion,
               nombre: nombre,
-              num_likes: 0,
+              numLikes: 0,
               id_lista: idLista,
             };
   

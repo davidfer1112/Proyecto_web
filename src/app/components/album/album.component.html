@@ -12,8 +12,13 @@
         </div>
     
         <div class="canciones">
-            <app-canciones></app-canciones>
-
+            <app-canciones
+                *ngFor="let cancion of canciones"
+                [nombre]="cancion.nombre"
+                [duracion]="cancion.duracion"
+                [artista]="cancion.artista"
+                [numLikes]="cancion.numLikes"
+            ></app-canciones>
         </div>
     </div>
   

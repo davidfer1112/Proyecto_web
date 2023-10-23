@@ -10,7 +10,7 @@
 }
 
 .info-album{
-    padding-bottom: 10%;
+    padding-bottom: 100px;
 }
 
 .info-album img {
@@ -27,6 +27,7 @@
 
 .info-album p {
     margin-top: 10px;
+    padding-bottom: 20px;
 }
 
 .titulo-container {
@@ -41,5 +42,7 @@
     cursor: pointer;
 }
 
-
+.canciones{
+    padding-bottom: 110px;
+}
   

@@ -34,12 +34,10 @@ export class AlbumComponent implements OnInit {
       this.cancionService.getCancionesPorAlbum(genero)
         .subscribe((canciones: CancionModel[]) => {
           this.canciones = canciones;
-          console.log(this.canciones);
 
           this.listaService.getNumLikesPorNombre(genero)
             .subscribe((numLikes: number | undefined) => {
               this.numLikes = numLikes;
-              console.log('Likes:', this.numLikes);
             });
         });
     });
