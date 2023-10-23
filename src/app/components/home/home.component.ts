@@ -19,7 +19,6 @@ export class HomeComponent implements OnInit {
     this.serviciolista.getListas().subscribe(
       (response: ListaModel[]) => {
         this.datos = response;
-        console.log('Datos obtenidos:', this.datos);
       },
       (error) => {
         console.error("Error al obtener los datos", error);

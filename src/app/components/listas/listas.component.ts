@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input} from '@angular/core';
 
 import { ListaModel } from 'src/app/models/Lista.model';
 import { Router } from '@angular/router';
@@ -34,8 +34,8 @@ export class ListasComponent {
   }
 
   // Este método redirige a la página de álbum
-  navegarAAlbum() {
-    this.router.navigate(['/album']);
+  navegarAAlbum(genero: string) {
+    this.router.navigate(['/album', genero]);
   }
 
 }
