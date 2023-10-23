@@ -19,6 +19,15 @@ export class SharedService {
     this.duracionCancion.next(duracion);
   }
 
+  private duracionTotalCancion = new BehaviorSubject<number>(0);
+  duracionTotalCancion$ = this.duracionTotalCancion.asObservable();
+
+  setDuracionTotal(duracionTotal: string) {
+    const [minutos, segundos] = duracionTotal.split(':').map(Number);
+    const duracionEnSegundos = minutos * 60 + segundos;
+    this.duracionTotalCancion.next(duracionEnSegundos);
+  }
+
   private duracionActualCancion = new BehaviorSubject<string>('');
   duracionActualCancion$ = this.duracionActualCancion.asObservable();
 

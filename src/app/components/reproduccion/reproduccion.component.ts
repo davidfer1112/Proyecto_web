@@ -30,7 +30,9 @@ export class ReproduccionComponent implements OnInit{
     this.sharedService.nombreCancion$.subscribe((nombre) => (this.nombreCancion = nombre));
     this.sharedService.artistaCancion$.subscribe((artista) => (this.artistaCancion = artista));
     
-    this.sharedService.duracionActualCancion$.subscribe((duracion) => (this.duracionCancion = this.formatearTiempo(Number(duracion))));
+    this.sharedService.duracionActualCancion$.subscribe((duracionActual) => {
+      this.duracionCancion = duracionActual;
+    });
   }
 
   get imagenLike(): string {
@@ -97,12 +99,13 @@ export class ReproduccionComponent implements OnInit{
     }
   }
 
-  formatearTiempo(tiempo: number): string {
-    const minutos = Math.floor(tiempo / 60);
-    const segundos = tiempo % 60;
+  formatearTiempo(tiempo: number | string): string {
+    const segundos = typeof tiempo === 'string' ? parseInt(tiempo, 10) : tiempo;
+    const minutos = Math.floor(segundos / 60);
+    const segundosRestantes = segundos % 60;
     const minutosFormateados = minutos < 10 ? `0${minutos}` : minutos;
-    const segundosFormateados = segundos < 10 ? `0${segundos}` : segundos;
-
+    const segundosFormateados = segundosRestantes < 10 ? `0${segundosRestantes}` : segundosRestantes;
+  
     return `${minutosFormateados}:${segundosFormateados}`;
   }
 
