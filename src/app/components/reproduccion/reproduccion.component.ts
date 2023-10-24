@@ -34,10 +34,11 @@ export class ReproduccionComponent implements OnInit{
   ngOnInit() {
     this.sharedService.nombreCancion$.subscribe((nombre) => (this.nombreCancion = nombre));
     this.sharedService.artistaCancion$.subscribe((artista) => (this.artistaCancion = artista));
-    
+  
     this.sharedService.duracionActualCancion$.subscribe((duracionActual) => {
-      this.duracionCancion = duracionActual;
+    this.duracionCancion = duracionActual || '00:00';
     });
+    
   }
 
   get imagenLike(): string {
@@ -58,27 +59,36 @@ export class ReproduccionComponent implements OnInit{
   }
 
   iniciarBarraDeProgreso() {
-    const intervalo = 1000; 
+    const intervalo = 1000;
   
     if (this.tiempoTranscurrido >= this.duracionTotal) {
       this.tiempoTranscurrido = 0;
       this.barraProgreso = 0;
     }
   
-    this.actualizarBarraDeProgreso(); 
+    const duracionEnSegundos = this.convertirTiempoASegundos(this.duracionCancion);
+    this.duracionTotal = duracionEnSegundos;
+  
+    this.actualizarBarraDeProgreso();
   
     this.intervaloBarraProgreso = setInterval(() => {
       this.tiempoTranscurrido += 1;
   
       if (this.tiempoTranscurrido >= this.duracionTotal) {
-        this.tiempoTranscurrido = 0; 
-        this.barraProgreso = 0; 
-        this.toggleReproduccion(); 
+        this.tiempoTranscurrido = 0;
+        this.barraProgreso = 0;
+        this.toggleReproduccion();
       } else {
         this.actualizarBarraDeProgreso();
       }
     }, intervalo);
   }
+  
+  convertirTiempoASegundos(tiempo: string): number {
+    const [minutos, segundos] = tiempo.split(':').map(Number);
+    return minutos * 60 + segundos;
+  }
+  
   
   
   detenerBarraDeProgreso() {

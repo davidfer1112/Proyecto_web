@@ -34,4 +34,8 @@ export class SharedService {
   setDuracionActual(duracionActual: string) {
     this.duracionActualCancion.next(duracionActual);
   }
+
+  getDuracionTotal(): number {
+    return this.duracionTotalCancion.value;
+  }
 }
