@@ -3,17 +3,17 @@
     <div class="song-container">
         <img [src]="imagenAlbum" alt="imagen album" class="imagen-cancion" [class.rotating]="reproduciendo">
         <div class="song-details">
-          <h3>titulo</h3>
-          <p>artista</p>
+          <h3>{{ nombreCancion }}</h3>
+          <p>{{ artistaCancion }}</p>
         </div>
       </div>
 
       <div class="progress-bar-container">
         <div class="progress-bar" [style.width]="barraProgreso + '%'"></div>
         <div class="time-labels">
-            <span>{{ formatearTiempo(tiempoTranscurrido) }}</span>
-            <span>{{ formatearTiempo(duracionTotal) }}</span>
-          </div>
+          <span>{{ formatearTiempo(tiempoTranscurrido) }}</span>
+          <span>{{ formatearTiempo(duracionCancion) }}</span>
+        </div>
       </div>
       
 
@@ -25,4 +25,6 @@
           <img [src]="imagenLike" alt="like">
         </button>
     </div>
+
+    <audio #audioPlayer [src]="rutaDelAudio" (play)="reiniciarBarraDeProgreso()" (pause)="detenerBarraDeProgreso()"></audio>
 </div>
