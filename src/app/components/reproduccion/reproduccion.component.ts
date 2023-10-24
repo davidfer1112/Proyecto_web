@@ -30,15 +30,24 @@ export class ReproduccionComponent implements OnInit{
   tiempoReproduccionActual = 0;
 
   rutaDelAudio = 'assets/audio/elisir.mp3'; 
+  rutaDelAudio2 = 'assets/audio/BohemianRhapsody.mp3';
 
   ngOnInit() {
-    this.sharedService.nombreCancion$.subscribe((nombre) => (this.nombreCancion = nombre));
+    this.sharedService.nombreCancion$.subscribe((nombre) => {
+      this.nombreCancion = nombre;
+  
+      if (this.nombreCancion === 'Bohemian Rhapsody') {
+        this.rutaDelAudio = 'assets/audio/BohemianRhapsody.mp3';
+      } else {
+        this.rutaDelAudio = 'assets/audio/elisir.mp3';
+      }
+    });
+  
     this.sharedService.artistaCancion$.subscribe((artista) => (this.artistaCancion = artista));
   
     this.sharedService.duracionActualCancion$.subscribe((duracionActual) => {
-    this.duracionCancion = duracionActual || '00:00';
+      this.duracionCancion = duracionActual || '00:00';
     });
-    
   }
 
   get imagenLike(): string {
