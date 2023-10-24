@@ -25,4 +25,6 @@
           <img [src]="imagenLike" alt="like">
         </button>
     </div>
+
+    <audio #audioPlayer [src]="rutaDelAudio"  (play)="iniciarBarraDeProgreso()" (pause)="detenerBarraDeProgreso()"></audio>
 </div>

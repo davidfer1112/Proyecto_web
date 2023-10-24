@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SharedService } from 'src/app/services/Shared/shared.service';
 
 @Component({
@@ -13,6 +13,8 @@ export class ReproduccionComponent implements OnInit{
     'assets/images/gustaRelleno.png'
   ];
 
+  @ViewChild('audioPlayer') audioPlayer!: ElementRef;
+
   constructor(private sharedService: SharedService) {}
 
   nombreCancion: string = '';
@@ -26,6 +28,8 @@ export class ReproduccionComponent implements OnInit{
   barraProgreso = 0;
   intervaloBarraProgreso: any;
 
+  rutaDelAudio = 'assets/audio/elisir.mp3'; 
+
   ngOnInit() {
     this.sharedService.nombreCancion$.subscribe((nombre) => (this.nombreCancion = nombre));
     this.sharedService.artistaCancion$.subscribe((artista) => (this.artistaCancion = artista));
@@ -34,7 +38,7 @@ export class ReproduccionComponent implements OnInit{
       this.duracionCancion = duracionActual;
     });
   }
-
+  
   get imagenLike(): string {
     return this.imagenesLike[this.indiceImagenActual];
   }
@@ -84,8 +88,10 @@ export class ReproduccionComponent implements OnInit{
   toggleReproduccion() {
     if (this.reproduciendo) {
       this.detenerBarraDeProgreso();
+      this.audioPlayer.nativeElement.pause();
     } else {
       this.iniciarBarraDeProgreso();
+      this.audioPlayer.nativeElement.play();
     }
   
     this.reproduciendo = !this.reproduciendo;
