@@ -27,6 +27,7 @@ export class ReproduccionComponent implements OnInit{
   tiempoTranscurrido = 0; 
   barraProgreso = 0;
   intervaloBarraProgreso: any;
+  tiempoReproduccionActual = 0;
 
   rutaDelAudio = 'assets/audio/elisir.mp3'; 
 
@@ -38,15 +39,14 @@ export class ReproduccionComponent implements OnInit{
       this.duracionCancion = duracionActual;
     });
   }
-  
+
   get imagenLike(): string {
     return this.imagenesLike[this.indiceImagenActual];
   }
 
   cambiarImagen() {
-    setTimeout(() => {
-      this.indiceImagenActual = (this.indiceImagenActual + 1) % this.imagenesLike.length;
-    }, 100); 
+    this.detenerBarraDeProgreso();
+    this.indiceImagenActual = (this.indiceImagenActual + 1) % this.imagenesLike.length;
   }
 
   get imagenPlayPause(): string {
@@ -83,6 +83,7 @@ export class ReproduccionComponent implements OnInit{
   
   detenerBarraDeProgreso() {
     clearInterval(this.intervaloBarraProgreso);
+    this.tiempoReproduccionActual = this.tiempoTranscurrido;
   }
 
   toggleReproduccion() {
@@ -91,9 +92,12 @@ export class ReproduccionComponent implements OnInit{
       this.audioPlayer.nativeElement.pause();
     } else {
       this.iniciarBarraDeProgreso();
+      // Inicia la barra de progreso desde el tiempo guardado
+      this.tiempoTranscurrido = this.tiempoReproduccionActual;
+      this.actualizarBarraDeProgreso();
       this.audioPlayer.nativeElement.play();
     }
-  
+
     this.reproduciendo = !this.reproduciendo;
   }
 
@@ -123,5 +127,11 @@ export class ReproduccionComponent implements OnInit{
   
     return `${minutosStr}:${segundosStr}`;
   }
+
+  reiniciarBarraDeProgreso() {
+    this.detenerBarraDeProgreso();
+    this.iniciarBarraDeProgreso();
+  }
+
 
 }
