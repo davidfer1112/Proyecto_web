@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -24,7 +25,8 @@ export class LoginComponent {
     private renderer: Renderer2,
     private el: ElementRef,
     private personaService: PersonaService,
-    private route: ActivatedRoute  // Agrega ActivatedRoute a la lista de dependencias
+    private route: ActivatedRoute,
+    private cookieService: CookieService
   ) {}
 
   persona: PersonaModel = {
@@ -84,51 +86,51 @@ export class LoginComponent {
 
 
   registrarPersona() {
-
-    if (!this.persona.nombre || !this.persona.apellido 
-      || !this.persona.correo_electronico || !this.persona.contrasenia) {
-
-        this.messageService.add({
+    if (!this.persona.nombre || !this.persona.apellido || !this.persona.correo_electronico || !this.persona.contrasenia) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Por favor, complete todos los campos.'
+      });
+      return;
+    }
+  
+    const formData = {
+      nombre: this.persona.nombre,
+      apellido: this.persona.apellido,
+      correo_electronico: this.persona.correo_electronico,
+      password: this.persona.contrasenia,
+      esAdmin : false
+    };
+  
+    this.personaService.registrarPersona(formData).subscribe(
+      (respuesta) => {
+        // Verificar si la respuesta contiene un token
+        if (respuesta && respuesta.token) {
+          // Guardar el token en una cookie (puedes usar ngx-cookie-service)
+          this.cookieService.set('token', respuesta.token);
+          this.router.navigate(['/home']);
+        } else {
+          this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Por favor, complete todos los campos.'
-        });
-        return; 
-    }
-
-    const formData = {
-        nombre: this.persona.nombre,
-        apellido: this.persona.apellido,
-        correo_electronico: this.persona.correo_electronico,
-        contrasenia: this.persona.contrasenia
-    };
-
-    this.personaService.createPersona(formData).subscribe(
-        (respuesta) => {
-            // Mostrar mensaje de Toast de éxito
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Éxito',
-                detail: 'La persona se ha creado con éxito.'
-            });
-
-            setTimeout(function() {
-                location.reload();
-            }, 2000);
-
-        },
-        (error) => {
-            console.error('Error al crear persona:', error);
-
-            // Mostrar mensaje de Toast de error
-            this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Error al crear la persona.'
-            });
+            detail: 'Error al registrar la persona. Token no recibido.'
+          });
         }
+      },
+      (error) => {
+        console.error('Error al registrar persona:', error);
+  
+        // Mostrar mensaje de Toast de error
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al registrar la persona.'
+        });
+      }
     );
-}
+  }
+  
 
 
 
