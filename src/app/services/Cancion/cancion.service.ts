@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient , HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CancionModel } from 'src/app/models/Cancion.model';
 import { map } from 'rxjs/operators';
@@ -14,9 +14,11 @@ export class CancionService {
 
   constructor(private http: HttpClient) { }
 
-  // metodo para obterner todas las canciones
+  // Método para obtener todas las canciones con token
   getCanciones(): Observable<any> {
-    return this.http.get(`${this.URI}/cancion/list`);
+    const token = this.getCookie('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.get(`${this.URI}/cancion/list`, { headers });
   }
 
   // método para obtener canciones por el nombre del album
@@ -49,18 +51,13 @@ export class CancionService {
     return this.http.delete(`${this.URI}/cancion/${id}`)
   }
 
-  
-  
 
-
-  // Ejemplo parar consumir una API
-  private URIEjem = "https://restcountries.com/v3.1"
-
-  
-
-  // Ejemplo de una solicitud GET
-  obtenerDatos(): Observable<any> {
-    return this.http.get(`${this.URIEjem}/name/Colombia`);
+  // Metodo para obtener el valor de una cookie por nombre
+  private getCookie(name: string): string | null {
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length === 2) return parts.pop()?.split(";").shift() || null;
+    return null;
   }
 
 
