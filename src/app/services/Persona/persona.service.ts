@@ -6,6 +6,7 @@ import { Observable, of } from 'rxjs';
 import { PersonaModel } from 'src/app/models/Persona.models';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +14,7 @@ import { catchError } from 'rxjs/operators';
 export class PersonaService {
   private URI = 'http://localhost:8080';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cookieService: CookieService) {}
 
   // Método para obtener todas las personas
   getPersonas(): Observable<PersonaModel[]> {
@@ -40,6 +41,28 @@ export class PersonaService {
     return this.http.delete(`${this.URI}/Persona/${id}`);
   }
 
+  // Método para registrar una persona
+  registrarPersona(persona: any): Observable<any> {
+    const url = 'http://localhost:8080/auth/register';
+
+    return this.http.post(url, persona).pipe(
+      catchError((error) => {
+        console.error('Error al registrar persona:', error);
+        return of(false); 
+      })
+    );
+  }
+
+  // Método para inici ar sesión
+  iniciarSesion(url: string, data: any): Observable<any> {
+    return this.http.post(url, data).pipe(
+      catchError((error) => {
+        console.error('Error al iniciar sesión:', error);
+        return of(false);
+      })
+    );
+  }
+
   // Método para verificar si ya existe un correo electrónico
   checkCorreoExistente(correo: string): Observable<boolean> {
     return this.getPersonas().pipe(
@@ -51,7 +74,7 @@ export class PersonaService {
       }),
       catchError((error) => {
         console.error('Error al verificar correo electrónico:', error);
-        return of(false); // Devuelve false en caso de error
+        return of(false); 
       })
     );
   }

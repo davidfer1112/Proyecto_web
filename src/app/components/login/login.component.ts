@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -24,7 +25,8 @@ export class LoginComponent {
     private renderer: Renderer2,
     private el: ElementRef,
     private personaService: PersonaService,
-    private route: ActivatedRoute  // Agrega ActivatedRoute a la lista de dependencias
+    private route: ActivatedRoute,
+    private cookieService: CookieService
   ) {}
 
   persona: PersonaModel = {
@@ -34,7 +36,8 @@ export class LoginComponent {
     nombre: '',
   };
 
-  esAdmin: boolean = false;
+  esAdminlog: boolean = false;
+  esAdminRe: boolean =false;
 
 
   @ViewChild('formLogin') formLogin!: NgForm;
@@ -59,76 +62,101 @@ export class LoginComponent {
       return;
     }
   
-    // Verificar si el correo existe
-    this.personaService.checkCorreoExistente(this.persona.correo_electronico).subscribe(
-      (correoExistente) => {
-        if (correoExistente) {
-          // Si el checkbox de administrador está marcado, redirige a /home/admin, de lo contrario a /home
-          const rutaDestino = this.esAdmin ? '/home/admin' : '/home';
+    const loginData = {
+      nombre: this.persona.correo_electronico,
+      password: this.persona.contrasenia,
+      esAdmin: this.esAdminlog
+    };
+  
+    const loginUrl = 'http://localhost:8080/auth/login';
+  
+    this.personaService.iniciarSesion(loginUrl, loginData).subscribe(
+      (respuesta: any) => {
+        // Verificar si la respuesta contiene un token
+        if (respuesta && respuesta.token) {
+          // Guardar el token en la cookie
+          this.cookieService.set('token', respuesta.token);
+  
+          // Redirigir a la página correspondiente
+          const rutaDestino = this.esAdminlog ? '/home/admin' : '/home';
           this.router.navigate([rutaDestino]);
         } else {
-          // Mostrar mensaje de Toast si el correo no existe
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Correo electrónico no encontrado. Verifica tus credenciales.'
+            detail: 'Token no recibido en la respuesta.'
           });
         }
       },
       (error) => {
-        console.error('Error al verificar correo electrónico:', error);
+        console.error('Error al iniciar sesión:', error);
+  
+        // Mostrar mensaje de Toast de error
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al iniciar sesión.'
+        });
       }
     );
   }
   
+  
+  
 
 
   registrarPersona() {
+    if (!this.persona.nombre || !this.persona.apellido || !this.persona.correo_electronico || !this.persona.contrasenia) {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Por favor, complete todos los campos.'
+      });
+      return;
+    }
+  
+    const formData = {
+      nombre: this.persona.nombre,
+      apellido: this.persona.apellido,
+      correo_electronico: this.persona.correo_electronico,
+      password: this.persona.contrasenia,
+      esAdmin: this.esAdminRe
+    };
+  
+    this.personaService.registrarPersona(formData).subscribe(
+      (respuesta) => {
+        // Verificar si la respuesta contiene un token
+        if (respuesta && respuesta.token) {
+          this.cookieService.set('token', respuesta.token);
 
-    if (!this.persona.nombre || !this.persona.apellido 
-      || !this.persona.correo_electronico || !this.persona.contrasenia) {
+          if (this.esAdminRe) {
+            this.router.navigate(['/home/admin']);
+          }else{
+          this.router.navigate(['/home']);
+          }
 
-        this.messageService.add({
+        } else {
+          this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Por favor, complete todos los campos.'
-        });
-        return; 
-    }
-
-    const formData = {
-        nombre: this.persona.nombre,
-        apellido: this.persona.apellido,
-        correo_electronico: this.persona.correo_electronico,
-        contrasenia: this.persona.contrasenia
-    };
-
-    this.personaService.createPersona(formData).subscribe(
-        (respuesta) => {
-            // Mostrar mensaje de Toast de éxito
-            this.messageService.add({
-                severity: 'success',
-                summary: 'Éxito',
-                detail: 'La persona se ha creado con éxito.'
-            });
-
-            setTimeout(function() {
-                location.reload();
-            }, 2000);
-
-        },
-        (error) => {
-            console.error('Error al crear persona:', error);
-
-            // Mostrar mensaje de Toast de error
-            this.messageService.add({
-                severity: 'error',
-                summary: 'Error',
-                detail: 'Error al crear la persona.'
-            });
+            detail: 'Error al registrar la persona. Token no recibido.'
+          });
         }
+      },
+      (error) => {
+        console.error('Error al registrar persona:', error);
+  
+        // Mostrar mensaje de Toast de error
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al registrar la persona.'
+        });
+      }
     );
-}
+  }
+  
+  
 
 
 
@@ -211,11 +239,11 @@ export class LoginComponent {
   };
 
   particlesLoaded(container: Container): void {
-    console.log(container);
+    //console.log(container);
   }
 
   async particlesInit(engine: Engine): Promise<void> {
-    console.log(engine);
+    //console.log(engine);
 
     await loadSlim(engine);
   }
