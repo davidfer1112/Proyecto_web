@@ -30,10 +30,17 @@ export class ListaService {
     return this.http.get(`${this.URI}/genero/${id}`);
   }
 
-  // método para crear una lista
-  createLista(lista: ListaModel): Observable<any> {
-    return this.http.post(`${this.URI}/genero/create`, lista);
+   // Método para crear una lista con token
+   createLista(lista: ListaModel): Observable<any> {
+    const token = this.getCookie('token');
+    
+    // Agrega el token al encabezado de autorización
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    // Realiza la solicitud HTTP con el encabezado de autorización
+    return this.http.post(`${this.URI}/genero/create`, lista, { headers });
   }
+
 
   // método para actualizar una lista según el id
   updateLista(id: number, lista: ListaModel): Observable<any> {

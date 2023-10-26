@@ -36,9 +36,11 @@ export class CancionService {
     return this.http.get(`${this.URI}/cancion/${id}`);
   }
 
-  // metodo para crear una cancion
-  createCancion(cancion:CancionModel): Observable<any> {
-    return this.http.post(`${this.URI}/cancion/create`,cancion)
+  // Método para crear una canción con token
+  createCancion(cancion: CancionModel): Observable<any> {
+    const token = this.getCookie('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.http.post(`${this.URI}/cancion/create`, cancion, { headers });
   }
 
   //metodo para actualizar una cancion segun el id
