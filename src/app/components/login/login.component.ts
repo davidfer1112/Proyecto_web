@@ -100,14 +100,13 @@ export class LoginComponent {
       apellido: this.persona.apellido,
       correo_electronico: this.persona.correo_electronico,
       password: this.persona.contrasenia,
-      esAdmin : false
+      esAdmin: this.esAdmin  
     };
   
     this.personaService.registrarPersona(formData).subscribe(
       (respuesta) => {
         // Verificar si la respuesta contiene un token
         if (respuesta && respuesta.token) {
-          // Guardar el token en una cookie (puedes usar ngx-cookie-service)
           this.cookieService.set('token', respuesta.token);
           this.router.navigate(['/home']);
         } else {
@@ -130,6 +129,7 @@ export class LoginComponent {
       }
     );
   }
+  
   
 
 

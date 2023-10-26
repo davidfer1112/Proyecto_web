@@ -61,6 +61,12 @@
                     <input type="password" required [(ngModel)]="persona.contrasenia" name="contrasenia">
                     <label>Contraseña</label>
                 </div>
+
+                <div class="container-checkbox">
+                    <input type="checkbox" [(ngModel)]="esAdmin" name="esAdmin">
+                    <label>Admin</label>
+                </div>
+
                 <button type="submit" class="boton-login">Registro</button>
                 <div class="iniciosesion-registro">
                     <p>¿Ya tienes cuenta?
