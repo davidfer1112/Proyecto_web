@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { ListaModel } from 'src/app/models/Lista.model';
 import { map } from 'rxjs/operators';
@@ -15,7 +15,14 @@ export class ListaService {
 
   // método para obtener todas las listas
   getListas(): Observable<any> {
-    return this.http.get(`${this.URI}/genero/list`);
+
+    const token = this.getCookie('token');
+    
+    // Agrega el token al encabezado de autorización
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    // Realiza la solicitud HTTP con el encabezado de autorización
+    return this.http.get(`${this.URI}/genero/list`, { headers });
   }
 
   // método para obtener una lista según el id
@@ -23,10 +30,17 @@ export class ListaService {
     return this.http.get(`${this.URI}/genero/${id}`);
   }
 
-  // método para crear una lista
-  createLista(lista: ListaModel): Observable<any> {
-    return this.http.post(`${this.URI}/genero/create`, lista);
+   // Método para crear una lista con token
+   createLista(lista: ListaModel): Observable<any> {
+    const token = this.getCookie('token');
+    
+    // Agrega el token al encabezado de autorización
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    // Realiza la solicitud HTTP con el encabezado de autorización
+    return this.http.post(`${this.URI}/genero/create`, lista, { headers });
   }
+
 
   // método para actualizar una lista según el id
   updateLista(id: number, lista: ListaModel): Observable<any> {
@@ -56,6 +70,14 @@ getNumLikesPorNombre(nombreLista: string): Observable<number | undefined> {
       return listaEncontrada ? listaEncontrada.numLikes : undefined;
     })
   );
+}
+
+ // Metodo para obtener el valor de una cookie por nombre
+ private getCookie(name: string): string | null {
+  const value = "; " + document.cookie;
+  const parts = value.split("; " + name + "=");
+  if (parts.length === 2) return parts.pop()?.split(";").shift() || null;
+  return null;
 }
 
 

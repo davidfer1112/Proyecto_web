@@ -51,7 +51,7 @@ export class LoginComponent {
   }
 
   inicioSesion(formLogin: NgForm) {
-    console.log(this.persona.correo_electronico, this.persona.contrasenia);
+    
   
     if (!this.persona.correo_electronico || !this.persona.contrasenia) {
       this.messageService.add({
