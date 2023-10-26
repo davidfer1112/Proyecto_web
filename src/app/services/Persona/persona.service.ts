@@ -53,6 +53,16 @@ export class PersonaService {
     );
   }
 
+  // Método para inici ar sesión
+  iniciarSesion(url: string, data: any): Observable<any> {
+    return this.http.post(url, data).pipe(
+      catchError((error) => {
+        console.error('Error al iniciar sesión:', error);
+        return of(false);
+      })
+    );
+  }
+
   // Método para verificar si ya existe un correo electrónico
   checkCorreoExistente(correo: string): Observable<boolean> {
     return this.getPersonas().pipe(

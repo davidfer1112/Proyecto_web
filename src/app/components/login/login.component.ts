@@ -36,7 +36,8 @@ export class LoginComponent {
     nombre: '',
   };
 
-  esAdmin: boolean = false;
+  esAdminlog: boolean = false;
+  esAdminRe: boolean =false;
 
 
   @ViewChild('formLogin') formLogin!: NgForm;
@@ -61,27 +62,46 @@ export class LoginComponent {
       return;
     }
   
-    // Verificar si el correo existe
-    this.personaService.checkCorreoExistente(this.persona.correo_electronico).subscribe(
-      (correoExistente) => {
-        if (correoExistente) {
-          // Si el checkbox de administrador está marcado, redirige a /home/admin, de lo contrario a /home
-          const rutaDestino = this.esAdmin ? '/home/admin' : '/home';
+    const loginData = {
+      nombre: this.persona.correo_electronico,
+      password: this.persona.contrasenia,
+      esAdmin: this.esAdminlog
+    };
+  
+    const loginUrl = 'http://localhost:8080/auth/login';
+  
+    this.personaService.iniciarSesion(loginUrl, loginData).subscribe(
+      (respuesta: any) => {
+        // Verificar si la respuesta contiene un token
+        if (respuesta && respuesta.token) {
+          // Guardar el token en la cookie
+          this.cookieService.set('token', respuesta.token);
+  
+          // Redirigir a la página correspondiente
+          const rutaDestino = this.esAdminlog ? '/home/admin' : '/home';
           this.router.navigate([rutaDestino]);
         } else {
-          // Mostrar mensaje de Toast si el correo no existe
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Correo electrónico no encontrado. Verifica tus credenciales.'
+            detail: 'Token no recibido en la respuesta.'
           });
         }
       },
       (error) => {
-        console.error('Error al verificar correo electrónico:', error);
+        console.error('Error al iniciar sesión:', error);
+  
+        // Mostrar mensaje de Toast de error
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al iniciar sesión.'
+        });
       }
     );
   }
+  
+  
   
 
 
@@ -100,7 +120,7 @@ export class LoginComponent {
       apellido: this.persona.apellido,
       correo_electronico: this.persona.correo_electronico,
       password: this.persona.contrasenia,
-      esAdmin: this.esAdmin  
+      esAdmin: this.esAdminRe
     };
   
     this.personaService.registrarPersona(formData).subscribe(
@@ -108,7 +128,13 @@ export class LoginComponent {
         // Verificar si la respuesta contiene un token
         if (respuesta && respuesta.token) {
           this.cookieService.set('token', respuesta.token);
+
+          if (this.esAdminRe) {
+            this.router.navigate(['/home/admin']);
+          }else{
           this.router.navigate(['/home']);
+          }
+
         } else {
           this.messageService.add({
             severity: 'error',
@@ -213,11 +239,11 @@ export class LoginComponent {
   };
 
   particlesLoaded(container: Container): void {
-    console.log(container);
+    //console.log(container);
   }
 
   async particlesInit(engine: Engine): Promise<void> {
-    console.log(engine);
+    //console.log(engine);
 
     await loadSlim(engine);
   }
