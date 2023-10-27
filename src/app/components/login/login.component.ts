@@ -75,7 +75,7 @@ export class LoginComponent {
         // Verificar si la respuesta contiene un token
         if (respuesta && respuesta.token) {
           // Guardar el token en la cookie
-          this.cookieService.set('token', respuesta.token);
+          this.cookieService.set('token', respuesta.token, undefined, '/');
   
           // Redirigir a la página correspondiente
           const rutaDestino = this.esAdminlog ? '/home/admin' : '/home';
@@ -127,7 +127,7 @@ export class LoginComponent {
       (respuesta) => {
         // Verificar si la respuesta contiene un token
         if (respuesta && respuesta.token) {
-          this.cookieService.set('token', respuesta.token);
+          this.cookieService.set('token', respuesta.token, undefined, '/');
 
           if (this.esAdminRe) {
             this.router.navigate(['/home/admin']);
