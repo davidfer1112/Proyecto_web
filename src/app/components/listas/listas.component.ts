@@ -1,4 +1,7 @@
 import { Component, Input} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { SharedService } from 'src/app/services/Shared/shared.service';
+
 
 import { ListaModel } from 'src/app/models/Lista.model';
 import { Router } from '@angular/router';
@@ -23,7 +26,11 @@ export class ListasComponent {
     return this.imagenesLike[this.indiceImagenActual];
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private route: ActivatedRoute, private sharedService: SharedService) {
+
+    this.sharedService.setRutaActual(this.router.url);
+  }
+
 
   // Este método se ejecuta cuando se hace click en el botón de like, para alternar entre
   // me gusta o no la imagen
@@ -36,6 +43,10 @@ export class ListasComponent {
   // Este método redirige a la página de álbum
   navegarAAlbum(genero: string) {
     this.router.navigate(['/album', genero]);
+  }
+
+  esRutaAdmin(): boolean {
+    return this.router.url === '/home/admin';
   }
 
 }

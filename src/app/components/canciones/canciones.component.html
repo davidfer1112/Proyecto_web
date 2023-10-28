@@ -9,8 +9,8 @@
             <p class="artista">{{ artista }}</p><br>
             <p class="likes">Likes: {{ numLikes }}</p>
         </div>
-        <button type="button" class="boton-gusta" (click)="cambiarImagen()">
+        <button type="button" class="boton-gusta" *ngIf="mostrarBotonLike" (click)="cambiarImagen()">
             <img [src]="imagenLike" alt="like">
-        </button>
+          </button>
     </div>
 </div>

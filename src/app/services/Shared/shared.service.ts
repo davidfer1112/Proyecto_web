@@ -8,7 +8,9 @@ export class SharedService {
   private nombreCancion = new BehaviorSubject<string>('');
   private artistaCancion = new BehaviorSubject<string>('');
   private duracionCancion = new BehaviorSubject<string>('');
+  private rutaActual = new BehaviorSubject<string>('');
 
+  rutaActual$ = this.rutaActual.asObservable();
   nombreCancion$ = this.nombreCancion.asObservable();
   artistaCancion$ = this.artistaCancion.asObservable();
   duracionCancion$ = this.duracionCancion.asObservable();
@@ -38,4 +40,9 @@ export class SharedService {
   getDuracionTotal(): number {
     return this.duracionTotalCancion.value;
   }
+
+  setRutaActual(ruta: string) {
+    this.rutaActual.next(ruta);
+  }
+
 }

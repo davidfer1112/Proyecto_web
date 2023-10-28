@@ -8,7 +8,11 @@ import { SharedService } from 'src/app/services/Shared/shared.service';
 })
 export class CancionesComponent {
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private sharedService: SharedService) {
+      this.sharedService.rutaActual$.subscribe((ruta) => {
+      this.mostrarBotonLike = ruta !== '/home/admin';
+    });
+  }
 
   @Input() nombre: string = '';
   @Input() duracion: string = '';
@@ -21,6 +25,7 @@ export class CancionesComponent {
   ];
 
   indiceImagenActual = 0;
+  mostrarBotonLike: boolean = true;
 
   get imagenLike(): string {
     return this.imagenesLike[this.indiceImagenActual];
