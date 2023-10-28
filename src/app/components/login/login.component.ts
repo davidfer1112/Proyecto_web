@@ -84,7 +84,7 @@ export class LoginComponent {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Token no recibido en la respuesta.'
+            detail: 'Credecniales incorrectas o permisos no validos'
           });
         }
       },

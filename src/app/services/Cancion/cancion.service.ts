@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders} from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { CancionModel } from 'src/app/models/Cancion.model';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,20 @@ export class CancionService {
 
   private URI = "http://localhost:8080"
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router:Router) { }
 
   // Método para obtener todas las canciones con token
   getCanciones(): Observable<any> {
     const token = this.getCookie('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.http.get(`${this.URI}/cancion/list`, { headers });
+    return this.http.get(`${this.URI}/cancion/list`, { headers }).pipe(
+      catchError((error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
+        return throwError(error); 
+      })
+    );
   }
 
   // método para obtener canciones por el nombre del album

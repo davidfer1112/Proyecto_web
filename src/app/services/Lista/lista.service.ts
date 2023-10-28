@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { ListaModel } from 'src/app/models/Lista.model';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ListaService {
 
   private URI = "http://localhost:8080"
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router:Router) { }
 
   // método para obtener todas las listas
   getListas(): Observable<any> {
@@ -22,7 +23,14 @@ export class ListaService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
     // Realiza la solicitud HTTP con el encabezado de autorización
-    return this.http.get(`${this.URI}/genero/list`, { headers });
+    return this.http.get(`${this.URI}/genero/list`, { headers }).pipe(
+      catchError((error) => {
+        if (error.status === 403) {
+          this.router.navigate(['/login']);
+        }
+        return throwError(error); 
+      })
+    );
   }
 
   // método para obtener una lista según el id

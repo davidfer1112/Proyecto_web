@@ -9,6 +9,7 @@ import { CancionService } from 'src/app/services/Cancion/cancion.service';
 import { RelacionesService } from 'src/app/services/Relaciones/relaciones.service';
 
 
+
 @Component({
   selector: 'app-interfaz-admin',
   templateUrl: './interfaz-admin.component.html',
@@ -26,6 +27,15 @@ export class InterfazAdminComponent {
     private cancionService: CancionService,
     private relacionesService: RelacionesService
   ) {}
+
+  ngOnInit(): void {
+    this.listaService.getListas().subscribe(
+      (response: ListaModel[]) => {},
+      (error) => {
+        console.error("Error al obtener los datos", error);
+      }
+    );
+  }
 
 
   desplegarBotones = false;
