@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { SharedService } from 'src/app/services/Shared/shared.service';
 
 
 
@@ -26,7 +27,8 @@ export class LoginComponent {
     private el: ElementRef,
     private personaService: PersonaService,
     private route: ActivatedRoute,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private sharedService: SharedService
   ) {}
 
   persona: PersonaModel = {
@@ -42,6 +44,24 @@ export class LoginComponent {
 
   @ViewChild('formLogin') formLogin!: NgForm;
   @ViewChild('formRegistro') formRegistro!: NgForm;
+
+
+  ngOnInit() {
+    // Verificar la existencia de la cookie al cargar el componente
+    const tokenExists = this.cookieService.check('token');
+    
+    if (tokenExists) {
+      // Obtener el estado de administrador desde el servicio compartido
+      const permValue = this.cookieService.get('perm');
+
+      // Redirigir según el estado de administrador
+      if (permValue == 'ad') {
+        this.router.navigate(['/home/admin']);
+      } else {
+        this.router.navigate(['/home']);
+      }
+    }
+  }
 
 
 
@@ -76,10 +96,11 @@ export class LoginComponent {
         if (respuesta && respuesta.token) {
           // Guardar el token en la cookie
           this.cookieService.set('token', respuesta.token, undefined, '/');
+
+          this.sharedService.setEsAdmin(this.esAdminlog);
   
           // Redirigir a la página correspondiente
-          const rutaDestino = this.esAdminlog ? '/home/admin' : '/home';
-          this.router.navigate([rutaDestino]);
+          this.redirigirSegunEstado();
         } else {
           this.messageService.add({
             severity: 'error',
@@ -129,6 +150,8 @@ export class LoginComponent {
         if (respuesta && respuesta.token) {
           this.cookieService.set('token', respuesta.token, undefined, '/');
 
+          this.sharedService.setEsAdmin(this.esAdminRe);
+
           if (this.esAdminRe) {
             this.router.navigate(['/home/admin']);
           }else{
@@ -154,6 +177,18 @@ export class LoginComponent {
         });
       }
     );
+  }
+
+  private redirigirSegunEstado() {
+    // Obtener el estado de administrador desde el servicio compartido
+    const permValue = this.cookieService.get('perm');
+
+      // Redirigir según el estado de administrador
+      if (permValue == 'ad') {
+      this.router.navigate(['/home/admin']);
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
   
   

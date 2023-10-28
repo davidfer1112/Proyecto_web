@@ -1,7 +1,10 @@
 // welcome.component.ts
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { MoveDirection, ClickMode, HoverMode, OutMode, Container, Engine } from "tsparticles-engine";
 import { loadSlim } from "tsparticles-slim";
+import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
+import { SharedService } from 'src/app/services/Shared/shared.service';
 
 @Component({
   selector: 'app-welcome',
@@ -9,6 +12,33 @@ import { loadSlim } from "tsparticles-slim";
   styleUrls: ['./welcome.component.css']
 })
 export class WelcomeComponent {
+
+  constructor(
+    private router: Router,
+    private cookieService: CookieService,
+    private sharedService: SharedService
+  ) {}
+
+  navigateToLogin() {
+    // Verificar la existencia de la cookie al hacer clic en el botón
+    const tokenExists = this.cookieService.check('token');
+
+    if (tokenExists) {
+      // Obtener el estado de administrador desde el servicio compartido
+      const permValue = this.cookieService.get('perm');
+
+      // Redirigir según el estado de administrador
+      if (permValue == 'ad') {
+        this.router.navigate(['/home/admin']);
+      } else {
+        this.router.navigate(['/home']);
+      }
+    } else {
+      // Si no hay cookie, dirigir a la ruta /login
+      this.router.navigate(['/login']);
+    }
+  }
+
 
   id = "tsparticles";
 
@@ -85,11 +115,11 @@ export class WelcomeComponent {
   };
 
   particlesLoaded(container: Container): void {
-    console.log(container);
+    //console.log(container);
   }
 
   async particlesInit(engine: Engine): Promise<void> {
-    console.log(engine);
+    //console.log(engine);
 
 
     await loadSlim(engine);
