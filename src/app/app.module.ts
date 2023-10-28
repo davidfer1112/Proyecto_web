@@ -18,7 +18,6 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ListasComponent } from './components/listas/listas.component';
 import { ReproduccionComponent } from './components/reproduccion/reproduccion.component';
-import { InfoUsuarioComponent } from './components/info-usuario/info-usuario.component';
 import { InterfazAdminComponent } from './components/interfaz-admin/interfaz-admin.component';
 import { HomeAdminComponent } from './components/home-admin/home-admin.component';
 import { HeaderAdminComponent } from './components/header-admin/header-admin.component';
@@ -38,7 +37,6 @@ import { AlbumComponent } from './components/album/album.component';
     HeaderComponent,
     ListasComponent,
     ReproduccionComponent,
-    InfoUsuarioComponent,
     InterfazAdminComponent,
     HomeAdminComponent,
     HeaderAdminComponent,
