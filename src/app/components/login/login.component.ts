@@ -36,7 +36,7 @@ export class LoginComponent {
   persona: PersonaModel = {
     apellido: '',
     contrasenia: '',
-    correo_electronico: '',
+    correoElectronico: '',
     nombre: '',
   };
 
@@ -69,6 +69,8 @@ export class LoginComponent {
         (error) => {
           // Token no válido o error al realizar la validación, redirigir a login
           this.cookieService.delete('token');
+          this.cookieService.delete('perm');
+          this.cookieService.delete('cor');
           this.router.navigate(['/login']);
         }
       );
@@ -86,7 +88,7 @@ export class LoginComponent {
   inicioSesion(formLogin: NgForm) {
     
   
-    if (!this.persona.correo_electronico || !this.persona.contrasenia) {
+    if (!this.persona.correoElectronico || !this.persona.contrasenia) {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -96,7 +98,7 @@ export class LoginComponent {
     }
   
     const loginData = {
-      nombre: this.persona.correo_electronico,
+      nombre: this.persona.correoElectronico,
       password: this.persona.contrasenia,
       esAdmin: this.esAdminlog
     };
@@ -110,8 +112,11 @@ export class LoginComponent {
           // Guardar el token en la cookie
           this.cookieService.set('token', respuesta.token, undefined, '/');
 
+          const correoCodificado = encodeURIComponent(this.persona.correoElectronico);
+          this.cookieService.set('cor', correoCodificado, undefined, '/');
+
           this.sharedService.setEsAdmin(this.esAdminlog);
-  
+
           // Redirigir a la página correspondiente
           this.redirigirSegunEstado();
         } else {
@@ -140,7 +145,7 @@ export class LoginComponent {
 
 
   registrarPersona() {
-    if (!this.persona.nombre || !this.persona.apellido || !this.persona.correo_electronico || !this.persona.contrasenia) {
+    if (!this.persona.nombre || !this.persona.apellido || !this.persona.correoElectronico || !this.persona.contrasenia) {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -152,7 +157,7 @@ export class LoginComponent {
     const formData = {
       nombre: this.persona.nombre,
       apellido: this.persona.apellido,
-      correo_electronico: this.persona.correo_electronico,
+      correoElectronico: this.persona.correoElectronico,
       password: this.persona.contrasenia,
       esAdmin: this.esAdminRe
     };

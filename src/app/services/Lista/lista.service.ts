@@ -2,8 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { ListaModel } from 'src/app/models/Lista.model';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { SharedService } from '../Shared/shared.service';
+import { PersonaService } from '../Persona/persona.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,12 @@ export class ListaService {
 
   private URI = "http://localhost:8080"
 
-  constructor(private http: HttpClient, private router:Router) { }
+  constructor(
+    private http: HttpClient, 
+    private router:Router,
+    private sharedService: SharedService,
+    private personaService: PersonaService
+    ){}
 
   // método para obtener todas las listas
   getListas(): Observable<any> {
@@ -39,6 +46,41 @@ export class ListaService {
       })
     );
   }
+
+  likeLista(idLista: number): Observable<any> {
+    const token = this.getCookie('token');
+    
+    // Verificar la existencia de la cookie al cargar el servicio
+    if (!token) {
+      // Si no hay token, redirigir a la página de login
+      this.router.navigate(['/login']);
+      return throwError('No token found');
+    }
+    
+    
+    // Obtener el correo electrónico desde SharedService
+    const correo = this.sharedService.getCorreoElectronico();
+    
+    // Llamar al servicio PersonaService para obtener el idPersona
+    return this.personaService.getIdPersonaPorCorreo().pipe(
+      switchMap(idPersona => {
+        // Agregar el token al encabezado de autorización
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    
+        // Realizar la solicitud HTTP con el encabezado de autorización y el idPersona obtenido
+        return this.http.put(`${this.URI}/relaciones/persona/${idPersona}/genero/${idLista}`, null, { headers }).pipe(
+          catchError((error) => {
+            if (error.status === 403) {
+              // Si la respuesta es un error 403, redirigir a la página de login
+              this.router.navigate(['/login']);
+            }
+            return throwError(error);
+          })
+        );
+      })
+    );
+  }
+  
   
 
   // método para obtener una lista según el id

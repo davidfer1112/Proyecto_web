@@ -12,6 +12,7 @@ export class SharedService {
   private rutaActual = new BehaviorSubject<string>('');
   private esAdmin = new BehaviorSubject<boolean>(false);
   private duracionTotalCancion = new BehaviorSubject<number>(0);
+  private correoElectronico = new BehaviorSubject<string>('');
 
   duracionTotalCancion$ = this.duracionTotalCancion.asObservable();
   esAdmin$ = this.esAdmin.asObservable();
@@ -19,6 +20,7 @@ export class SharedService {
   nombreCancion$ = this.nombreCancion.asObservable();
   artistaCancion$ = this.artistaCancion.asObservable();
   duracionCancion$ = this.duracionCancion.asObservable();
+  correoElectronico$ = this.correoElectronico.asObservable();
 
   constructor(private cookieService: CookieService) {}
 
@@ -55,6 +57,14 @@ export class SharedService {
 
   setRutaActual(ruta: string) {
     this.rutaActual.next(ruta);
+  }
+
+  setCorreoElectronico(correo: string) {
+    this.correoElectronico.next(correo);
+  }
+
+  getCorreoElectronico(): string {
+    return this.correoElectronico.value;
   }
 
 }

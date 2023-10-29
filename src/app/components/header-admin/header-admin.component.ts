@@ -24,6 +24,7 @@ export class HeaderAdminComponent {
   salir(){
     this.cookieService.delete('token');
     this.cookieService.delete('perm');
+    this.cookieService.delete('cor');
     this.router.navigate(['/']);
   }
 
