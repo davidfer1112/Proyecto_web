@@ -16,22 +16,30 @@ export class ListaService {
 
   // método para obtener todas las listas
   getListas(): Observable<any> {
-
     const token = this.getCookie('token');
-    
+  
+    // Verificar la existencia de la cookie al cargar el servicio
+    if (!token) {
+      // Si no hay token, redirigir a la página de login
+      this.router.navigate(['/login']);
+      return throwError('No token found');
+    }
+  
     // Agrega el token al encabezado de autorización
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-
+  
     // Realiza la solicitud HTTP con el encabezado de autorización
     return this.http.get(`${this.URI}/genero/list`, { headers }).pipe(
       catchError((error) => {
         if (error.status === 403) {
+          // Si la respuesta es un error 403, redirigir a la página de login
           this.router.navigate(['/login']);
         }
-        return throwError(error); 
+        return throwError(error);
       })
     );
   }
+  
 
   // método para obtener una lista según el id
   getLista(id: number): Observable<any> {

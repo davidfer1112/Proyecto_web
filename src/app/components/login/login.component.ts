@@ -10,6 +10,7 @@ import { ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { SharedService } from 'src/app/services/Shared/shared.service';
+import { ListaService } from 'src/app/services/Lista/lista.service';
 
 
 
@@ -28,7 +29,8 @@ export class LoginComponent {
     private personaService: PersonaService,
     private route: ActivatedRoute,
     private cookieService: CookieService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private listaService: ListaService
   ) {}
 
   persona: PersonaModel = {
@@ -49,19 +51,30 @@ export class LoginComponent {
   ngOnInit() {
     // Verificar la existencia de la cookie al cargar el componente
     const tokenExists = this.cookieService.check('token');
-    
+  
     if (tokenExists) {
       // Obtener el estado de administrador desde el servicio compartido
       const permValue = this.cookieService.get('perm');
-
-      // Redirigir según el estado de administrador
-      if (permValue == 'ad') {
-        this.router.navigate(['/home/admin']);
-      } else {
-        this.router.navigate(['/home']);
-      }
+  
+      // Realizar la validación del token antes de redirigir
+      this.listaService.getListas().subscribe(
+        () => {
+          // Token válido, redirigir según el estado de administrador
+          if (permValue == 'ad') {
+            this.router.navigate(['/home/admin']);
+          } else {
+            this.router.navigate(['/home']);
+          }
+        },
+        (error) => {
+          // Token no válido o error al realizar la validación, redirigir a login
+          this.cookieService.delete('token');
+          this.router.navigate(['/login']);
+        }
+      );
     }
   }
+  
 
 
 
