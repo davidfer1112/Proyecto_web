@@ -80,6 +80,40 @@ export class ListaService {
       })
     );
   }
+
+  getLikeEstado(idLista: number): Observable<any> {
+    const token = this.getCookie('token');
+  
+    // Verificar la existencia de la cookie al cargar el servicio
+    if (!token) {
+      // Si no hay token, redirigir a la página de login
+      this.router.navigate(['/login']);
+      return throwError('No token found');
+    }
+  
+    // Obtener el correo electrónico desde SharedService
+    const correo = this.sharedService.getCorreoElectronico();
+  
+    // Llamar al servicio PersonaService para obtener el idPersona
+    return this.personaService.getIdPersonaPorCorreo().pipe(
+      switchMap(idPersona => {
+        // Agregar el token al encabezado de autorización
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+        // Realizar la solicitud HTTP con el encabezado de autorización y el idPersona obtenido
+        return this.http.get(`${this.URI}/relaciones/persona/${idPersona}/genero/${idLista}`, { headers }).pipe(
+          catchError((error) => {
+            if (error.status === 403) {
+              // Si la respuesta es un error 403, redirigir a la página de login
+              this.router.navigate(['/login']);
+            }
+            return throwError(error);
+          })
+        );
+      })
+    );
+  }
+  
   
   
 
