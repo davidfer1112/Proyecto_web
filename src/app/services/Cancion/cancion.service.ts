@@ -19,6 +19,7 @@ export class CancionService {
     private router:Router,
     private personaService: PersonaService
     ){}
+    
 
   // Método para obtener todas las canciones con token
   getCanciones(): Observable<any> {
@@ -111,5 +112,27 @@ export class CancionService {
       })
     );
   }
+
+  getLikeEstadoCancion(nombreCancion: string): Observable<number> {
+    const token = this.getCookie('token');
+    
+    if (!token) {
+      this.router.navigate(['/login']);
+      return throwError('No token found');
+    }
+  
+    return this.personaService.getIdPersonaPorCorreo().pipe(
+      switchMap((idPersona) => {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        return this.getIdCancionPorNombre(nombreCancion).pipe(
+          switchMap((idCancion) => {
+            return this.http.get<{ like: number }>(`${this.URI}/relaciones/persona/${idPersona}/cancion/${idCancion}`, { headers })
+              .pipe(map(response => response.like));
+          })
+        );
+      })
+    );
+  }
+  
 
 }
