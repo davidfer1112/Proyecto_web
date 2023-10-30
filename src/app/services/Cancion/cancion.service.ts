@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient , HttpHeaders} from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { CancionModel } from 'src/app/models/Cancion.model';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, switchMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
+import { PersonaService } from '../Persona/persona.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,11 @@ export class CancionService {
 
   private URI = "http://localhost:8080"
 
-  constructor(private http: HttpClient, private router:Router) { }
+  constructor(
+    private http: HttpClient, 
+    private router:Router,
+    private personaService: PersonaService
+    ){}
 
   // Método para obtener todas las canciones con token
   getCanciones(): Observable<any> {
@@ -70,5 +75,41 @@ export class CancionService {
     return null;
   }
 
+
+  // Método para obtener el ID de una canción por su nombre
+  getIdCancionPorNombre(nombreCancion: string): Observable<number | undefined> {
+    return this.getCanciones().pipe(
+      map((canciones: CancionModel[]) => {
+        const cancionEncontrada = canciones.find(c => c.nombre === nombreCancion);
+        return cancionEncontrada ? cancionEncontrada.id_cancion : undefined;
+      })
+    );
+  }
+
+  // Método para obtener la relación entre persona y canción
+  getRelacionPersonaCancion(nombreCancion: string): Observable<any> {
+
+    const token = this.getCookie('token');
+    
+    // Verificar la existencia de la cookie al cargar el servicio
+    if (!token) {
+      // Si no hay token, redirigir a la página de login
+      this.router.navigate(['/login']);
+      return throwError('No token found');
+    }
+    // Obtener el ID de persona
+    return this.personaService.getIdPersonaPorCorreo().pipe(
+      switchMap((idPersona) => {
+        const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+        // Obtener el ID de canción
+        return this.getIdCancionPorNombre(nombreCancion).pipe(
+          switchMap((idCancion) => {
+            // Realizar la consulta HTTP para la relación
+            return this.http.put(`${this.URI}/relaciones/persona/${idPersona}/cancion/${idCancion}`, null, { headers });
+          })
+        );
+      })
+    );
+  }
 
 }
