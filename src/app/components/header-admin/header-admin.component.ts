@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-header-admin',
@@ -7,7 +8,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./header-admin.component.css']
 })
 export class HeaderAdminComponent {
-  constructor(private router: Router){}
+
+  constructor(
+    private router: Router,
+    private cookieService: CookieService
+  ){}
 
   desplegarBotones = false;
 
@@ -15,8 +20,12 @@ export class HeaderAdminComponent {
     this.desplegarBotones = !this.desplegarBotones;
   }
 
-  irAInfo(){
-    this.router.navigate(['/info/usuario']);
+  //metodo para salir de la sesion
+  salir(){
+    this.cookieService.delete('token');
+    this.cookieService.delete('perm');
+    this.cookieService.delete('cor');
+    this.router.navigate(['/']);
   }
 
   irAAdmin(){

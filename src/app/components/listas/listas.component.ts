@@ -1,4 +1,9 @@
-import { Component, Input} from '@angular/core';
+import { Component, Input, OnInit} from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { SharedService } from 'src/app/services/Shared/shared.service';
+import { ListaService } from 'src/app/services/Lista/lista.service';
+
+
 
 import { ListaModel } from 'src/app/models/Lista.model';
 import { Router } from '@angular/router';
@@ -9,7 +14,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./listas.component.css']
 })
 
-export class ListasComponent {
+export class ListasComponent implements OnInit{
+
+  ngOnInit(): void {
+    this.verificarLike();
+  }
+
+
   @Input() lista: ListaModel = { genero: '', numLikes: 0 };
 
   imagenesLike = [
@@ -23,19 +34,66 @@ export class ListasComponent {
     return this.imagenesLike[this.indiceImagenActual];
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,
+              private route: ActivatedRoute, 
+              private sharedService: SharedService,
+              private listaService: ListaService
+     ) {
+      this.sharedService.setRutaActual(this.router.url);
+    }
 
-  // Este método se ejecuta cuando se hace click en el botón de like, para alternar entre
-  // me gusta o no la imagen
-  cambiarImagen() {
-    setTimeout(() => {
-      this.indiceImagenActual = (this.indiceImagenActual + 1) % this.imagenesLike.length;
-    }, 100);
-  }
+  idPersona: string | undefined;
+
 
   // Este método redirige a la página de álbum
   navegarAAlbum(genero: string) {
     this.router.navigate(['/album', genero]);
   }
+
+  esRutaAdmin(): boolean {
+    return this.router.url === '/home/admin';
+  }
+
+  darLike() {
+    // Verifica si id_lista está definido antes de llamar al servicio
+    if (this.lista.id_lista !== undefined) {
+      // Llamar al servicio para dar "like" a la lista actual
+      this.listaService.likeLista(this.lista.id_lista).subscribe(
+        (response) => {
+          console.log('Like exitoso', response);
+          // Actualizar la propiedad numLikes de la lista localmente
+          this.lista.numLikes++;
+          // Verificar y actualizar el estado de la imagen
+          this.verificarLike();
+        },
+        (error) => {
+          console.error('Error al dar like', error);
+        }
+      );
+    } else {
+      console.error('id_lista es undefined');
+    }
+  }
+
+
+  verificarLike() {
+    // Verifica si id_lista está definido antes de llamar al servicio
+    if (this.lista.id_lista !== undefined) {
+      // Llamar al servicio para obtener el estado de like de la lista actual
+      this.listaService.getLikeEstado(this.lista.id_lista).subscribe(
+        (response) => {
+          // Manejar la respuesta y determinar el estado del like
+          this.indiceImagenActual = response.like === 1 ? 1 : 0;
+        },
+        (error) => {
+          // Manejar el error si es necesario
+          console.error('Error al obtener estado de like', error);
+        }
+      );
+    } else {
+      console.error('id_lista es undefined');
+    }
+  }
+  
 
 }

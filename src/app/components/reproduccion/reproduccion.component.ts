@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { SharedService } from 'src/app/services/Shared/shared.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-reproduccion',
@@ -15,7 +16,10 @@ export class ReproduccionComponent implements OnInit{
 
   @ViewChild('audioPlayer') audioPlayer!: ElementRef;
 
-  constructor(private sharedService: SharedService) {}
+  constructor(
+    private sharedService: SharedService,
+    private cookieService: CookieService
+  ) {}
 
   nombreCancion: string = '';
   artistaCancion: string = '';
@@ -28,6 +32,7 @@ export class ReproduccionComponent implements OnInit{
   barraProgreso = 0;
   intervaloBarraProgreso: any;
   tiempoReproduccionActual = 0;
+  mostrarBotonLike = true;
 
   rutaDelAudio = 'assets/audio/elisir.mp3'; 
   rutaDelAudio2 = 'assets/audio/BohemianRhapsody.mp3';
@@ -35,6 +40,14 @@ export class ReproduccionComponent implements OnInit{
   ngOnInit() {
     this.sharedService.nombreCancion$.subscribe((nombre) => {
       this.nombreCancion = nombre;
+
+      const permValue = this.cookieService.get('perm');
+      if (permValue === 'ad') {
+        this.mostrarBotonLike = false;
+      }
+      else{
+        this.mostrarBotonLike = true;
+      }
   
       if (this.nombreCancion === 'Bohemian Rhapsody') {
         this.rutaDelAudio = 'assets/audio/BohemianRhapsody.mp3';

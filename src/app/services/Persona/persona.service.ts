@@ -1,8 +1,8 @@
 // persona.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, of, throwError } from 'rxjs';
 import { PersonaModel } from 'src/app/models/Persona.models';
 import { map } from 'rxjs/operators';
 import { catchError } from 'rxjs/operators';
@@ -68,7 +68,7 @@ export class PersonaService {
     return this.getPersonas().pipe(
       map((personas: PersonaModel[]) => {
         const existeCorreo = personas.some(
-          (persona) => persona.correo_electronico === correo
+          (persona) => persona.correoElectronico === correo
         );
         return existeCorreo;
       }),
@@ -78,5 +78,44 @@ export class PersonaService {
       })
     );
   }
+
+  // Método para obtener el id_persona según el correo electrónico
+  getIdPersonaPorCorreo(): Observable<number | undefined> {
+    const token = this.getCookie('token');
+    const correo = decodeURIComponent(this.cookieService.get('cor'));
+
+    // Verificar la existencia de la cookie al cargar el servicio
+    if (!token) {
+      // Si no hay token, redirigir a la página de login
+      // Puedes manejar esto según tus necesidades
+      return throwError('No token found');
+    }
+
+    // Agregar el token al encabezado de autorización
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    // Realizar la solicitud HTTP con el encabezado de autorización
+    return this.http.get<PersonaModel[]>(`${this.URI}/persona/list`, { headers }).pipe(
+      catchError((error) => {
+        // Manejar el error según tus necesidades
+        return throwError(error);
+      }),
+      // Map para obtener el id_persona
+      map((personas: PersonaModel[]) => {
+        const personaEncontrada = personas.find((persona) => persona.correoElectronico === correo);
+        return personaEncontrada ? personaEncontrada.id_persona : undefined;
+      })
+    );
+  }
+
+  // Metodo para obtener el valor de una cookie por nombre
+ private getCookie(name: string): string | null {
+  const value = "; " + document.cookie;
+  const parts = value.split("; " + name + "=");
+  if (parts.length === 2) return parts.pop()?.split(";").shift() || null;
+  return null;
+  }
+
+
 }
 

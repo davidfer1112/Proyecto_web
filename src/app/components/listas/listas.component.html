@@ -4,9 +4,8 @@
     <div class="info" >
       <h4>{{ lista.genero }}</h4>
     </div>
-    <button type="button" class="boton-gusta" (click)="cambiarImagen()">
+    <button type="button" class="boton-gusta" *ngIf="!esRutaAdmin()" (click)="darLike()">
       <img [src]="imagenLike" alt="like">
     </button>
   </div>
 </div>
-  

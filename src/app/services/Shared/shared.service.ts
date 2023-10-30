@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,10 +9,20 @@ export class SharedService {
   private nombreCancion = new BehaviorSubject<string>('');
   private artistaCancion = new BehaviorSubject<string>('');
   private duracionCancion = new BehaviorSubject<string>('');
+  private rutaActual = new BehaviorSubject<string>('');
+  private esAdmin = new BehaviorSubject<boolean>(false);
+  private duracionTotalCancion = new BehaviorSubject<number>(0);
+  private correoElectronico = new BehaviorSubject<string>('');
 
+  duracionTotalCancion$ = this.duracionTotalCancion.asObservable();
+  esAdmin$ = this.esAdmin.asObservable();
+  rutaActual$ = this.rutaActual.asObservable();
   nombreCancion$ = this.nombreCancion.asObservable();
   artistaCancion$ = this.artistaCancion.asObservable();
   duracionCancion$ = this.duracionCancion.asObservable();
+  correoElectronico$ = this.correoElectronico.asObservable();
+
+  constructor(private cookieService: CookieService) {}
 
   setSongInfo(nombre: string, artista: string, duracion: string) {
     this.nombreCancion.next(nombre);
@@ -19,8 +30,13 @@ export class SharedService {
     this.duracionCancion.next(duracion);
   }
 
-  private duracionTotalCancion = new BehaviorSubject<number>(0);
-  duracionTotalCancion$ = this.duracionTotalCancion.asObservable();
+  setEsAdmin(estado: boolean) {
+    this.esAdmin.next(estado);
+
+    // Setear la cookie 'perm' según el estado de administrador
+    const permValue = estado ? 'ad' : 'per';
+    this.cookieService.set('perm', permValue, undefined, '/');
+  }
 
   setDuracionTotal(duracionTotal: string) {
     const [minutos, segundos] = duracionTotal.split(':').map(Number);
@@ -38,4 +54,17 @@ export class SharedService {
   getDuracionTotal(): number {
     return this.duracionTotalCancion.value;
   }
+
+  setRutaActual(ruta: string) {
+    this.rutaActual.next(ruta);
+  }
+
+  setCorreoElectronico(correo: string) {
+    this.correoElectronico.next(correo);
+  }
+
+  getCorreoElectronico(): string {
+    return this.correoElectronico.value;
+  }
+
 }

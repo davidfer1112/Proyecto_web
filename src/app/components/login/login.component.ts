@@ -9,6 +9,8 @@ import { NgForm } from '@angular/forms';
 import { ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { SharedService } from 'src/app/services/Shared/shared.service';
+import { ListaService } from 'src/app/services/Lista/lista.service';
 
 
 
@@ -26,13 +28,15 @@ export class LoginComponent {
     private el: ElementRef,
     private personaService: PersonaService,
     private route: ActivatedRoute,
-    private cookieService: CookieService
+    private cookieService: CookieService,
+    private sharedService: SharedService,
+    private listaService: ListaService
   ) {}
 
   persona: PersonaModel = {
     apellido: '',
     contrasenia: '',
-    correo_electronico: '',
+    correoElectronico: '',
     nombre: '',
   };
 
@@ -44,6 +48,37 @@ export class LoginComponent {
   @ViewChild('formRegistro') formRegistro!: NgForm;
 
 
+  ngOnInit() {
+    // Verificar la existencia de la cookie al cargar el componente
+    const tokenExists = this.cookieService.check('token');
+  
+    if (tokenExists) {
+      // Obtener el estado de administrador desde el servicio compartido
+      const permValue = this.cookieService.get('perm');
+  
+      // Realizar la validación del token antes de redirigir
+      this.listaService.getListas().subscribe(
+        () => {
+          // Token válido, redirigir según el estado de administrador
+          if (permValue == 'ad') {
+            this.router.navigate(['/home/admin']);
+          } else {
+            this.router.navigate(['/home']);
+          }
+        },
+        (error) => {
+          // Token no válido o error al realizar la validación, redirigir a login
+          this.cookieService.delete('token');
+          this.cookieService.delete('perm');
+          this.cookieService.delete('cor');
+          this.router.navigate(['/login']);
+        }
+      );
+    }
+  }
+  
+
+
 
   toggleForm() {
     const containerFormulario = this.el.nativeElement.querySelector('.container-fomulario');
@@ -53,7 +88,7 @@ export class LoginComponent {
   inicioSesion(formLogin: NgForm) {
     
   
-    if (!this.persona.correo_electronico || !this.persona.contrasenia) {
+    if (!this.persona.correoElectronico || !this.persona.contrasenia) {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -63,7 +98,7 @@ export class LoginComponent {
     }
   
     const loginData = {
-      nombre: this.persona.correo_electronico,
+      nombre: this.persona.correoElectronico,
       password: this.persona.contrasenia,
       esAdmin: this.esAdminlog
     };
@@ -76,15 +111,19 @@ export class LoginComponent {
         if (respuesta && respuesta.token) {
           // Guardar el token en la cookie
           this.cookieService.set('token', respuesta.token, undefined, '/');
-  
+
+          const correoCodificado = encodeURIComponent(this.persona.correoElectronico);
+          this.cookieService.set('cor', correoCodificado, undefined, '/');
+
+          this.sharedService.setEsAdmin(this.esAdminlog);
+
           // Redirigir a la página correspondiente
-          const rutaDestino = this.esAdminlog ? '/home/admin' : '/home';
-          this.router.navigate([rutaDestino]);
+          this.redirigirSegunEstado();
         } else {
           this.messageService.add({
             severity: 'error',
             summary: 'Error',
-            detail: 'Token no recibido en la respuesta.'
+            detail: 'Credecniales incorrectas o permisos no validos'
           });
         }
       },
@@ -106,7 +145,7 @@ export class LoginComponent {
 
 
   registrarPersona() {
-    if (!this.persona.nombre || !this.persona.apellido || !this.persona.correo_electronico || !this.persona.contrasenia) {
+    if (!this.persona.nombre || !this.persona.apellido || !this.persona.correoElectronico || !this.persona.contrasenia) {
       this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -118,7 +157,7 @@ export class LoginComponent {
     const formData = {
       nombre: this.persona.nombre,
       apellido: this.persona.apellido,
-      correo_electronico: this.persona.correo_electronico,
+      correoElectronico: this.persona.correoElectronico,
       password: this.persona.contrasenia,
       esAdmin: this.esAdminRe
     };
@@ -128,6 +167,8 @@ export class LoginComponent {
         // Verificar si la respuesta contiene un token
         if (respuesta && respuesta.token) {
           this.cookieService.set('token', respuesta.token, undefined, '/');
+
+          this.sharedService.setEsAdmin(this.esAdminRe);
 
           if (this.esAdminRe) {
             this.router.navigate(['/home/admin']);
@@ -154,6 +195,18 @@ export class LoginComponent {
         });
       }
     );
+  }
+
+  private redirigirSegunEstado() {
+    // Obtener el estado de administrador desde el servicio compartido
+    const permValue = this.cookieService.get('perm');
+
+      // Redirigir según el estado de administrador
+      if (permValue == 'ad') {
+      this.router.navigate(['/home/admin']);
+    } else {
+      this.router.navigate(['/home']);
+    }
   }
   
   
