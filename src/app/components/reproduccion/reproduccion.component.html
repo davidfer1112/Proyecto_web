@@ -21,9 +21,6 @@
         <button type="button" class="boton-play" (click)="toggleReproduccion()">
           <img [src]="imagenPlayPause" alt="play">
         </button>
-        <button *ngIf="mostrarBotonLike" type="button" class="boton-gusta" (click)="cambiarImagen()">
-          <img [src]="imagenLike" alt="like">
-        </button>
     </div>
 
     <audio #audioPlayer [src]="rutaDelAudio" (play)="reiniciarBarraDeProgreso()" (pause)="detenerBarraDeProgreso()"></audio>
