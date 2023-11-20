@@ -1,6 +1,7 @@
 import { Component,Input, OnInit } from '@angular/core';
 import { SharedService } from 'src/app/services/Shared/shared.service';
 import { CancionService } from 'src/app/services/Cancion/cancion.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-canciones',
@@ -9,7 +10,7 @@ import { CancionService } from 'src/app/services/Cancion/cancion.service';
 })
 export class CancionesComponent implements OnInit {
 
-  constructor(private sharedService: SharedService, private cancionService: CancionService) {
+  constructor(private sharedService: SharedService, private cancionService: CancionService, private cookieService: CookieService) {
       this.sharedService.rutaActual$.subscribe((ruta) => {
       this.mostrarBotonLike = ruta !== '/home/admin';
     });
@@ -39,7 +40,8 @@ export class CancionesComponent implements OnInit {
   }
 
   verificarLike() {
-    if (this.nombre) {
+    const valorPermCookie = this.cookieService.get('perm');
+    if (this.nombre && valorPermCookie !== 'ad') {
       this.cancionService.getLikeEstadoCancion(this.nombre).subscribe(
         (response) => {
           // Asegúrate de que el valor de response sea 1 o 0

@@ -2,6 +2,7 @@ import { Component, Input, OnInit} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/services/Shared/shared.service';
 import { ListaService } from 'src/app/services/Lista/lista.service';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -37,7 +38,8 @@ export class ListasComponent implements OnInit{
   constructor(private router: Router,
               private route: ActivatedRoute, 
               private sharedService: SharedService,
-              private listaService: ListaService
+              private listaService: ListaService,
+              private cookieService: CookieService
      ) {
       this.sharedService.setRutaActual(this.router.url);
     }
@@ -77,8 +79,9 @@ export class ListasComponent implements OnInit{
 
 
   verificarLike() {
+    const valorPermCookie = this.cookieService.get('perm');
     // Verifica si id_lista está definido antes de llamar al servicio
-    if (this.lista.id_lista !== undefined) {
+    if (this.lista.id_lista !== undefined && valorPermCookie !== 'ad') {
       // Llamar al servicio para obtener el estado de like de la lista actual
       this.listaService.getLikeEstado(this.lista.id_lista).subscribe(
         (response) => {
